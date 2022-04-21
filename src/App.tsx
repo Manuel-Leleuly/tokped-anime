@@ -1,25 +1,34 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { lazy, Suspense } from "react";
+import { Route, Switch } from "react-router-dom";
+import "./App.css";
+import Nav from "./components/Nav/Nav";
+
+const AnimeListRoutes = lazy(() => import("./packages/AnimeList/routes/AnimeListRoutes"));
+const CollectionRoutes = lazy(() => import("./packages/Collection/routes/CollectionRoutes"));
+
+const AppRoutes = {
+  animeList: "/",
+  collection: "/collection",
+};
 
 function App() {
+  const renderAppPage = (Component: any) => (props: any) => {
+    return <Component {...props} />;
+  };
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      <Nav />
+      <Suspense fallback={<p>loading...</p>}>
+        <Switch>
+          <Route path={AppRoutes.collection} render={renderAppPage(CollectionRoutes)} />
+          <Route path={AppRoutes.animeList} render={renderAppPage(AnimeListRoutes)} />
+
+          {/* TODO: add error page */}
+          <Route path="*" render={renderAppPage(AnimeListRoutes)} />
+        </Switch>
+      </Suspense>
+    </>
   );
 }
 
