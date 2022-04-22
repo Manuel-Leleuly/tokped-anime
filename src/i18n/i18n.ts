@@ -2,16 +2,21 @@ import i18n, { Resource, TOptions } from "i18next";
 import LanguageDetector from "i18next-browser-languagedetector";
 import { initReactI18next } from "react-i18next";
 import config from "./config.json";
-import enUS from "./translations/en-US.json";
-import jpJP from "./translations/jp-JP.json";
+import en from "./translations/en.json";
+import jp from "./translations/jp.json";
 
 const languageCodes = config.languageCodes;
 const languageCodeStorageKey = "i18nextLng";
 
 const languageResource = {
-  "en-US": enUS,
-  "jp-JP": jpJP,
+  en: en,
+  jp: jp,
 };
+
+enum LANGUAGE_CODES {
+  en = "en",
+  jp = "jp",
+}
 
 const getLocalStorageLanguage = () => {
   let localStorageLanguage = localStorage.getItem(languageCodeStorageKey);
@@ -45,8 +50,13 @@ i18n
     },
   });
 
-i18n.on("languageChanged", () => localStorage.setItem(languageCodeStorageKey, i18n.language));
+i18n.on("languageChanged", () => {
+  localStorage.setItem(languageCodeStorageKey, i18n.language);
+  window.location.reload();
+});
 
 const t = (key: string, options?: TOptions) => i18n.t(key, options);
 
-export { i18n, t, languageCodes, getLocalStorageLanguage };
+const currentLanguage = i18n.language;
+
+export { i18n, t, languageCodes, getLocalStorageLanguage, currentLanguage, LANGUAGE_CODES };

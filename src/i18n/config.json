@@ -1,5 +1,5 @@
 {
-  "languageCodes": ["en-US", "jp-JP"],
-  "defaultLanguage": "en-US",
-  "fallbackLanguage": "en-US"
+  "languageCodes": ["en", "jp"],
+  "defaultLanguage": "en",
+  "fallbackLanguage": "en"
 }
