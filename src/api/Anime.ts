@@ -1,4 +1,4 @@
-import { MediaPageResponse } from "../models/Anime";
+import { AnimeDetailResponse, MediaPageResponse } from "../models/Anime";
 import { apiCall } from "./Axios";
 
 export const fetchAnimeList = (pageNumber: number, limitPerPage: number, abortSignal?: AbortSignal) => {
@@ -36,4 +36,41 @@ export const fetchAnimeList = (pageNumber: number, limitPerPage: number, abortSi
   };
 
   return apiCall({ query, variables, abortSignal, Codec: MediaPageResponse });
+};
+
+export const fetchAnimeDetail = (animeId: number, abortSignal?: AbortSignal) => {
+  const query = `
+        query($id: Int!) {
+            Media(id: $id){
+                id
+                title {
+                  english
+                  native
+                }
+                trailer {
+                  id
+                  site
+                  thumbnail
+                }
+                description (asHtml: true)
+                bannerImage
+                characters(sort: ROLE, perPage: 10) {
+                  nodes {
+                    id
+                    name {
+                      full
+                      native
+                    }
+                    image {
+                      medium
+                    }
+                  }
+                }
+              }
+        }
+    `;
+  const variables = {
+    id: animeId,
+  };
+  return apiCall({ query, variables, abortSignal, Codec: AnimeDetailResponse });
 };

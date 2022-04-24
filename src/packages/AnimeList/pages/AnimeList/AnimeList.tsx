@@ -146,8 +146,4 @@ const AnimeList: FC = (props) => {
   );
 };
 
-export default () => (
-  <AbortControllerContextProvider>
-    <AnimeList />
-  </AbortControllerContextProvider>
-);
+export default AnimeList;

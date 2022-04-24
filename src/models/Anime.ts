@@ -40,3 +40,52 @@ export const MediaPageResponse = T.type({
 });
 
 export type MediaPageResponse = T.TypeOf<typeof MediaPageResponse>;
+
+export const CharacterDetail = T.type({
+  id: T.number,
+  name: T.type({
+    full: T.union([T.string, T.null]),
+    native: T.union([T.string, T.null]),
+  }),
+  image: T.union([
+    T.type({
+      medium: T.union([T.string, T.null]),
+    }),
+    T.null,
+  ]),
+});
+
+export type CharacterDetail = T.TypeOf<typeof CharacterDetail>;
+
+export const CharacterNodes = T.array(CharacterDetail);
+
+export type CharacterNodes = T.TypeOf<typeof CharacterNodes>;
+
+export const CharacterListResponse = T.type({
+  nodes: CharacterNodes,
+});
+
+export type CharacterListResponse = T.TypeOf<typeof CharacterListResponse>;
+
+export const AnimeDetailResponse = T.type({
+  Media: T.type({
+    id: T.number,
+    title: T.type({
+      english: T.union([T.string, T.null]),
+      native: T.union([T.string, T.null]),
+    }),
+    trailer: T.union([
+      T.type({
+        id: T.union([T.string, T.null]),
+        site: T.union([T.string, T.null]),
+        thumbnail: T.union([T.string, T.null]),
+      }),
+      T.null,
+    ]),
+    description: T.union([T.string, T.null]),
+    bannerImage: T.union([T.string, T.null]),
+    characters: CharacterListResponse,
+  }),
+});
+
+export type AnimeDetailResponse = T.TypeOf<typeof AnimeDetailResponse>;
