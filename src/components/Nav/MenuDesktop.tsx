@@ -2,9 +2,8 @@ import Button from "@atlaskit/button";
 import { css } from "@emotion/css";
 import React, { FC } from "react";
 import { Link } from "react-router-dom";
-import { flexDisplay } from "./Nav";
 import styled from "@emotion/styled";
-import { mobileWidth } from "../../constants/constants";
+import { MOBILE_WIDTH } from "../../constants/constants";
 import { t } from "../../i18n/i18n";
 
 interface Props {
@@ -17,7 +16,7 @@ const Div = styled.div`
   justify-content: space-between;
   align-items: center;
 
-  @media (max-width: ${mobileWidth}) {
+  @media (max-width: ${MOBILE_WIDTH}) {
     display: none;
   }
 `;
@@ -31,15 +30,22 @@ const ButtonWrapper = styled.span`
     color: gray !important;
   }
 
-  @media (max-width: ${mobileWidth}) {
+  @media (max-width: ${MOBILE_WIDTH}) {
     display: none;
   }
+`;
+
+const DesktopMenu = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 250px;
 `;
 
 const MenuWrapper = styled.span`
   display: none;
 
-  @media (max-width: ${mobileWidth}) {
+  @media (max-width: ${MOBILE_WIDTH}) {
     display: block;
   }
 `;
@@ -49,12 +55,7 @@ const MenuDesktop: FC<Props> = (props) => {
   return (
     <>
       <Div>
-        <div
-          className={css({
-            ...flexDisplay,
-            width: "250px",
-          })}
-        >
+        <DesktopMenu>
           <Link
             to="/"
             className={css({
@@ -79,7 +80,7 @@ const MenuDesktop: FC<Props> = (props) => {
           >
             <p>{t("nav.menu.collection.label")}</p>
           </Link>
-        </div>
+        </DesktopMenu>
       </Div>
       <ButtonWrapper>
         <Button

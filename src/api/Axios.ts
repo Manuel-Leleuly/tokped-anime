@@ -17,12 +17,18 @@ export const apiCall = async <ResponseType>({
   query,
   variables,
   Codec,
+  abortSignal,
 }: {
   query: string;
   variables: Object;
   Codec: T.Type<ResponseType>;
+  abortSignal?: AbortSignal;
 }): Promise<{ response: AxiosResponse<Response<ResponseType>> | null; error: Error | null }> => {
-  const result: AxiosResponse<Response<ResponseType>> = await api.post("", { query, variables });
+  const result: AxiosResponse<Response<ResponseType>> = await api.post(
+    "",
+    { query, variables },
+    { signal: abortSignal }
+  );
 
   if (!Codec.is(result.data.data)) {
     const decodeError = Reporter.report(Codec.decode(result.data));

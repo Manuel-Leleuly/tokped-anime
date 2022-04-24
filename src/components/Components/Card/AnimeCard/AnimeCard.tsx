@@ -24,10 +24,24 @@ const Backdrop = styled.img`
   top: 0;
 `;
 
+const MovieInfoBackdrop = styled.div`
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: black;
+  opacity: 0.4;
+  z-index: 10;
+`;
+
 const MovieInfo = styled.div`
   position: absolute;
   bottom: 20px;
-  z-index: 10;
+  z-index: 20;
+  color: white;
+  font-size: 12px;
+  padding: 10px;
 `;
 
 const AnimeCard: FC<Props> = (props) => {
@@ -36,6 +50,7 @@ const AnimeCard: FC<Props> = (props) => {
   return (
     <MovieCardWrapper>
       {mediumImageUrl && <Backdrop src={mediumImageUrl} alt={title} />}
+      <MovieInfoBackdrop />
       <MovieInfo>
         <p
           className={css({

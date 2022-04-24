@@ -1,5 +1,6 @@
 import React, { lazy } from "react";
 import { Route, Switch } from "react-router-dom";
+import { Page } from "../../../components/Components";
 
 const PageRoutes = {
   animeList: "/",
@@ -15,10 +16,12 @@ const AnimeListRoutes = () => {
   };
 
   return (
-    <Switch>
-      <Route exact path={PageRoutes.animeList} render={renderAnimeListPage(AnimeListPage)} />
-      <Route path={PageRoutes.animeDetail} render={renderAnimeListPage(AnimeDetailPage)} />
-    </Switch>
+    <Page>
+      <Switch>
+        <Route exact path={PageRoutes.animeList} render={renderAnimeListPage(AnimeListPage)} />
+        <Route path={PageRoutes.animeDetail} render={renderAnimeListPage(AnimeDetailPage)} />
+      </Switch>
+    </Page>
   );
 };
 export default AnimeListRoutes;

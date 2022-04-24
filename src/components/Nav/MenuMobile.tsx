@@ -3,7 +3,7 @@ import { css } from "@emotion/css";
 import styled from "@emotion/styled";
 import React, { FC } from "react";
 import { Link } from "react-router-dom";
-import { mobileWidth } from "../../constants/constants";
+import { MOBILE_WIDTH } from "../../constants/constants";
 import { t } from "../../i18n/i18n";
 
 interface Props {
@@ -28,7 +28,7 @@ const MenuMobileWrapper = styled.div`
   -webkit-transition: transform 1s ease-in-out;
   transition: transform 0.5s ease-in-out;
 
-  @media (max-width: ${mobileWidth}) {
+  @media (max-width: ${MOBILE_WIDTH}) {
     display: flex;
   }
 `;
@@ -42,6 +42,7 @@ const MenuOverlay = styled.div`
   left: 0;
   right: 0;
   bottom: 0;
+  height: 100vh;
 `;
 
 const MenuAppear = css`

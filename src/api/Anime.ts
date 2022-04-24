@@ -1,7 +1,7 @@
 import { MediaPageResponse } from "../models/Anime";
 import { apiCall } from "./Axios";
 
-export const fetchAnimeList = (pageNumber: number, limitPerPage: number) => {
+export const fetchAnimeList = (pageNumber: number, limitPerPage: number, abortSignal?: AbortSignal) => {
   const query = `
         query($page: Int!, $perPage: Int!) {
             Page(page: $page, perPage: $perPage){
@@ -35,5 +35,5 @@ export const fetchAnimeList = (pageNumber: number, limitPerPage: number) => {
     perPage: limitPerPage,
   };
 
-  return apiCall({ query, variables, Codec: MediaPageResponse });
+  return apiCall({ query, variables, abortSignal, Codec: MediaPageResponse });
 };

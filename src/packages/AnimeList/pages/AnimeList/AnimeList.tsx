@@ -1,25 +1,50 @@
 import { css } from "@emotion/css";
 import styled from "@emotion/styled";
-import React, { FC, useEffect, useState } from "react";
+import React, { FC, useContext, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { fetchAnimeList } from "../../../../api/Anime";
-import { AnimeCard, Pagination } from "../../../../components/Components";
-import { currentLanguage, LANGUAGE_CODES } from "../../../../i18n/i18n";
+import { AnimeCard, Center, Pagination } from "../../../../components/Components";
+import { WINDOW_WIDTH } from "../../../../constants/constants";
+import AbortControllerContextProvider, { AbortControllerContext } from "../../../../context/AbortControllerContext";
+import { currentLanguage, LANGUAGE_CODES, t } from "../../../../i18n/i18n";
 import { MediaPageResponse, MediaResponse } from "../../../../models/Anime";
 import { RequestType } from "../../../../models/Response";
 
 const ANIME_PER_PAGE = 50;
 
+const AnimeListPage = styled.div`
+  padding-left: 2rem;
+  padding-right: 2rem;
+  position: relative;
+  height: 100vh;
+
+  @media (max-width: ${WINDOW_WIDTH.md}) {
+    padding: 0;
+  }
+`;
+
 const AnimeListWrapper = styled.div`
-  width: 100%;
-  display: flex;
-  justify-content: space-around;
-  align-items: center;
-  flex-wrap: wrap;
+  width: auto;
   margin-top: 50px;
+
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
+
+  @media (max-width: ${WINDOW_WIDTH.lg}) {
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+  }
+
+  @media (max-width: ${WINDOW_WIDTH.md}) {
+    grid-template-columns: 1fr 1fr 1fr;
+  }
+
+  @media (max-width: ${WINDOW_WIDTH.sm}) {
+    grid-template-columns: 1fr 1fr;
+  }
 `;
 
 const AnimeList: FC = (props) => {
+  const { signal } = useContext(AbortControllerContext);
   const [animeList, setAnimeList] = useState<RequestType<MediaPageResponse | null>>({
     isLoading: false,
     data: null,
@@ -37,35 +62,23 @@ const AnimeList: FC = (props) => {
   const getAnimeList = async (pageNumber: number) => {
     if (animeList.isLoading) return;
     setAnimeList((prevState) => ({ ...prevState, isLoading: true }));
-    fetchAnimeList(pageNumber, ANIME_PER_PAGE)
+    fetchAnimeList(pageNumber, ANIME_PER_PAGE, signal)
       .then((result) => {
         if (result.response && result.response.data) {
           const { data } = result.response;
-          setAnimeList((prevState) => ({ ...prevState, data: data.data, error: null }));
+          setAnimeList((prevState) => ({ ...prevState, data: data.data, error: null, isLoading: false }));
         } else {
           throw result.error;
         }
       })
       .catch((error) => {
-        console.error(error);
-        setAnimeList((prevState) => ({ ...prevState, error }));
-      })
-      .finally(() => {
-        setAnimeList((prevState) => ({ ...prevState, isLoading: false }));
+        setAnimeList((prevState) => ({ ...prevState, error, isLoading: false }));
       });
   };
 
   const onPageChange = (pageNumber: number) => {
     setSelectedPage(pageNumber);
   };
-
-  if (!animeList.data) {
-    return (
-      <>
-        <p>no anime found</p>
-      </>
-    );
-  }
 
   const getTitle = (media: MediaResponse): string => {
     const { title } = media;
@@ -74,17 +87,50 @@ const AnimeList: FC = (props) => {
     return "";
   };
 
+  if (!animeList.data || animeList.isLoading) {
+    return (
+      <span
+        className={css({
+          height: "100vh",
+        })}
+      >
+        <AnimeListPage>
+          <Center>
+            <p>{t("loading.label")}</p>
+          </Center>
+        </AnimeListPage>
+      </span>
+    );
+  }
+
+  if (!animeList.data) {
+    return (
+      <AnimeListPage>
+        <span
+          className={css({
+            height: "100vh",
+          })}
+        >
+          <Center>
+            <p>{t("animeList.notFound.label")}</p>
+          </Center>
+        </span>
+      </AnimeListPage>
+    );
+  }
+
   return (
     <>
-      <div
-        className={css`
-          padding-left: 20px;
-          padding-right: 20px;
-        `}
-      >
+      <AnimeListPage>
         <AnimeListWrapper>
           {animeList.data.Page.media.map((anime) => (
-            <Link to={`/${anime.id}`} key={anime.id}>
+            <Link
+              to={`/${anime.id}`}
+              key={anime.id}
+              className={css({
+                margin: "auto",
+              })}
+            >
               <AnimeCard
                 mediumImageUrl={anime.coverImage.medium}
                 releaseYear={anime.seasonYear || undefined}
@@ -93,9 +139,15 @@ const AnimeList: FC = (props) => {
             </Link>
           ))}
         </AnimeListWrapper>
-      </div>
-      <Pagination onPageChange={onPageChange} pageInfo={animeList.data.Page.pageInfo} />
+        <Pagination onPageChange={onPageChange} pageInfo={animeList.data.Page.pageInfo} />
+        <br />
+      </AnimeListPage>
     </>
   );
 };
-export default AnimeList;
+
+export default () => (
+  <AbortControllerContextProvider>
+    <AnimeList />
+  </AbortControllerContextProvider>
+);

@@ -4,18 +4,20 @@ import { getLocalStorageLanguage, LANGUAGE_CODES } from "../../i18n/i18n";
 import { css } from "@emotion/css";
 import MenuDesktop from "./MenuDesktop";
 import MenuMobile from "./MenuMobile";
+import styled from "@emotion/styled";
 
-export interface FlexDisplay {
-  display: string;
-  justifyContent: string;
-  alignItems: string;
-}
-
-export const flexDisplay: FlexDisplay = {
-  display: "flex",
-  justifyContent: "space-between",
-  alignItems: "center",
-};
+const NavWrapper = styled.nav`
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.5rem 2rem;
+  background: white;
+  z-index: 410;
+`;
 
 const Nav = () => {
   const { i18n } = useTranslation();
@@ -37,22 +39,15 @@ const Nav = () => {
 
   return (
     <>
-      <nav>
-        <div
-          className={css({
-            ...flexDisplay,
-            padding: "0.5rem 2rem",
-          })}
-        >
-          <p>Tokped Anime</p>
-          <MenuDesktop handleLanguageChange={handleLanguageChange} onMenuButtonClick={onMenuButtonClick} />
-          <MenuMobile
-            handleLanguageChange={handleLanguageChange}
-            isMenuClick={isMenuClick}
-            onMenuButtonClick={onMenuButtonClick}
-          />
-        </div>
-      </nav>
+      <NavWrapper>
+        <p>Tokped Anime</p>
+        <MenuDesktop handleLanguageChange={handleLanguageChange} onMenuButtonClick={onMenuButtonClick} />
+        <MenuMobile
+          handleLanguageChange={handleLanguageChange}
+          isMenuClick={isMenuClick}
+          onMenuButtonClick={onMenuButtonClick}
+        />
+      </NavWrapper>
     </>
   );
 };

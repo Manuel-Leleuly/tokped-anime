@@ -1,5 +1,6 @@
 import React, { lazy } from "react";
 import { Route, Switch } from "react-router-dom";
+import { Page } from "../../../components/Components";
 
 const PageRoutes = {
   collectionList: "/collection",
@@ -15,10 +16,12 @@ const CollectionRoutes = () => {
   };
 
   return (
-    <Switch>
-      <Route exact path={PageRoutes.collectionList} render={renderCollectionPage(CollectionListPage)} />
-      <Route exact path={PageRoutes.collectionDetail} render={renderCollectionPage(CollectionDetailPage)} />
-    </Switch>
+    <Page>
+      <Switch>
+        <Route exact path={PageRoutes.collectionList} render={renderCollectionPage(CollectionListPage)} />
+        <Route exact path={PageRoutes.collectionDetail} render={renderCollectionPage(CollectionDetailPage)} />
+      </Switch>
+    </Page>
   );
 };
 export default CollectionRoutes;

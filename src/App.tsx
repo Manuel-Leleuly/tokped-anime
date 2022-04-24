@@ -1,6 +1,7 @@
 import React, { lazy, Suspense } from "react";
 import { Route, Switch } from "react-router-dom";
 import "./App.css";
+import { Fallback } from "./components/Components";
 import Nav from "./components/Nav/Nav";
 
 const AnimeListRoutes = lazy(() => import("./packages/AnimeList/routes/AnimeListRoutes"));
@@ -19,7 +20,7 @@ function App() {
   return (
     <>
       <Nav />
-      <Suspense fallback={<p>loading...</p>}>
+      <Suspense fallback={<Fallback />}>
         <Switch>
           <Route path={AppRoutes.collection} render={renderAppPage(CollectionRoutes)} />
           <Route path={AppRoutes.animeList} render={renderAppPage(AnimeListRoutes)} />
