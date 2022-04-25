@@ -6,3 +6,5 @@ export const WINDOW_WIDTH = {
   lg: "992px",
   xl: "1200px",
 };
+
+export const COLLECTION_LOCAL_STORAGE_KEY = "collectionList";
