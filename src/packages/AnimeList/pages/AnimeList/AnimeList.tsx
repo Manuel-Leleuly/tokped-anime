@@ -5,12 +5,13 @@ import { Link } from "react-router-dom";
 import { fetchAnimeList } from "../../../../api/Anime";
 import { AnimeCard, Center, Pagination } from "../../../../components/Components";
 import { WINDOW_WIDTH } from "../../../../constants/constants";
-import AbortControllerContextProvider, { AbortControllerContext } from "../../../../context/AbortControllerContext";
-import { currentLanguage, LANGUAGE_CODES, t } from "../../../../i18n/i18n";
-import { MediaPageResponse, MediaResponse } from "../../../../models/Anime";
+import { AbortControllerContext } from "../../../../context/AbortControllerContext";
+import { t } from "../../../../i18n/i18n";
+import { MediaPageResponse } from "../../../../models/Anime";
 import { RequestType } from "../../../../models/Response";
+import { getTitle } from "../../../../utils/utils";
 
-const ANIME_PER_PAGE = 50;
+export const ANIME_PER_PAGE = 50;
 
 const AnimeListPage = styled.div`
   padding-left: 2rem;
@@ -80,13 +81,6 @@ const AnimeList: FC = (props) => {
     setSelectedPage(pageNumber);
   };
 
-  const getTitle = (media: MediaResponse): string => {
-    const { title } = media;
-    if (currentLanguage === LANGUAGE_CODES.en && title && title.english) return title.english;
-    if (currentLanguage === LANGUAGE_CODES.jp && title && title.native) return title.native;
-    return "";
-  };
-
   if (!animeList.data && animeList.isLoading) {
     return (
       <span
@@ -134,7 +128,7 @@ const AnimeList: FC = (props) => {
               <AnimeCard
                 mediumImageUrl={anime.coverImage.medium}
                 releaseYear={anime.seasonYear || undefined}
-                title={getTitle(anime)}
+                title={getTitle(anime.title)}
               />
             </Link>
           ))}

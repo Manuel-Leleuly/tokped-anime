@@ -5,13 +5,14 @@ import { RouteComponentProps } from "react-router-dom";
 import { fetchAnimeDetail } from "../../../../api/Anime";
 import { BannerCard, Center } from "../../../../components/Components";
 import { WINDOW_WIDTH } from "../../../../constants/constants";
-import AbortControllerContextProvider, { AbortControllerContext } from "../../../../context/AbortControllerContext";
-import { currentLanguage, LANGUAGE_CODES, t } from "../../../../i18n/i18n";
+import { AbortControllerContext } from "../../../../context/AbortControllerContext";
+import { t } from "../../../../i18n/i18n";
 import { AnimeDetailResponse } from "../../../../models/Anime";
 import { RequestType } from "../../../../models/Response";
 import Cast from "./Cast";
 import Description from "./Description";
 import Trailer from "./Trailer";
+import { getTitle } from "../../../../utils/utils";
 
 interface Props extends RouteComponentProps<{ animeId: string }> {}
 
@@ -110,18 +111,7 @@ const AnimeDetail: FC<Props> = (props) => {
 
   const renderTitle = (): string => {
     if (animeDetail.data && animeDetail.data.Media.title) {
-      const {
-        data: {
-          Media: { title },
-        },
-      } = animeDetail;
-      if (currentLanguage === LANGUAGE_CODES.en && title.english) {
-        return title.english;
-      }
-      if (currentLanguage === LANGUAGE_CODES.jp && title.native) {
-        return title.native;
-      }
-      return "";
+      return getTitle(animeDetail.data.Media.title);
     }
     return "";
   };

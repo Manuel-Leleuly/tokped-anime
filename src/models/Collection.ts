@@ -6,7 +6,7 @@ export const CollectionMedia = T.type({
     english: T.union([T.string, T.null]),
     native: T.union([T.string, T.null]),
   }),
-  seasonYear: T.union([T.string, T.null]),
+  seasonYear: T.union([T.number, T.null]),
   coverImage: T.type({
     extraLarge: T.union([T.string, T.null]),
     large: T.union([T.string, T.null]),

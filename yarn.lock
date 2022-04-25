@@ -61,6 +61,19 @@
     "@babel/runtime" "^7.0.0"
     "@emotion/core" "^10.0.9"
 
+"@atlaskit/checkbox@^12.3.11":
+  version "12.3.11"
+  resolved "https://registry.yarnpkg.com/@atlaskit/checkbox/-/checkbox-12.3.11.tgz#6974e95f41485fd7fa726a94963ac3bf81866e39"
+  integrity sha512-oCn7hOJ5gtkjGqkhSFYKeTsWrMm6OfjyouIYq+GlWbSOGq9ZjMDMIuhmtOpRimbgjyGjZExw/GPwXsHv6HBhRQ==
+  dependencies:
+    "@atlaskit/analytics-next" "^8.2.0"
+    "@atlaskit/ds-lib" "^1.4.0"
+    "@atlaskit/icon" "^21.10.0"
+    "@atlaskit/theme" "^12.1.0"
+    "@atlaskit/tokens" "^0.9.0"
+    "@babel/runtime" "^7.0.0"
+    "@emotion/core" "^10.0.9"
+
 "@atlaskit/codemod-utils@^4.0.0":
   version "4.0.0"
   resolved "https://registry.yarnpkg.com/@atlaskit/codemod-utils/-/codemod-utils-4.0.0.tgz#fd9508f3788437d03776c34e2000cce95aa37e03"

@@ -1,109 +1,132 @@
 import React, { ChangeEvent, FC, useState } from "react";
-import { CollectionList } from "../../../../../../models/Collection";
-import { FieldText, Modal } from "../../../../../../components/Components";
-import styled from "@emotion/styled";
-import collection from "../../Collection";
-import Button from "@atlaskit/button";
-import { css } from "@emotion/css";
+import { CollectionList, CollectionMedia } from "../../../../../../models/Collection";
+import { Modal } from "../../../../../../components/Components";
+import CollectionForm from "./CollectionForm";
+import AnimeListToPick from "./AnimeListToPick";
+import { updateCollectionListToLocalStorage } from "../../../../../../utils/utils";
+import { t } from "../../../../../../i18n/i18n";
 
 interface Props {
   collectionList: CollectionList;
-  onSubmit: () => void;
+  onSubmitSuccess: () => void;
   onCancel: () => void;
+  isEdit?: boolean;
+  selectedCollectionName?: string;
+  collectionId?: number;
 }
 
 enum COLLECTION_MODAL_STEPS {
   "FORM" = "FORM",
-  "COLLECTION_LIST" = "COLLECTION_LIST",
+  "ANIME_LIST" = "ANIME_LIST",
 }
 
 const AddCollectionModal: FC<Props> = (props) => {
-  const { collectionList, onSubmit, onCancel } = props;
+  const { collectionList, onSubmitSuccess, onCancel, isEdit, collectionId, selectedCollectionName } = props;
 
-  const [selectedStep, setSelectedStep] = useState<COLLECTION_MODAL_STEPS>(
-    !!collectionList.length ? COLLECTION_MODAL_STEPS.COLLECTION_LIST : COLLECTION_MODAL_STEPS.FORM
-  );
-  const [collectionName, setCollectionName] = useState<string>("");
+  const [selectedStep, setSelectedStep] = useState<COLLECTION_MODAL_STEPS>(COLLECTION_MODAL_STEPS.FORM);
+  const [collectionName, setCollectionName] = useState<string>(selectedCollectionName || "");
+  const [selectedMedia, setSelectedMedia] = useState<CollectionMedia[]>([]);
+  const [isModalLoading, setIsModalLoading] = useState<boolean>(false);
 
   const handleCollectionNameChange = (event: ChangeEvent<HTMLInputElement>) => {
     setCollectionName(event.target.value);
   };
 
-  const renderHelperMessage = () => {
+  const onSubmit = () => {
+    setIsModalLoading(true);
+    const newCollectionList = [...collectionList];
+    if (isEdit && selectedCollectionName && collectionId) {
+      const selectedCollectionIndex = newCollectionList.findIndex((collection) => collection.id === collectionId);
+      if (selectedCollectionIndex >= 0) {
+        newCollectionList[selectedCollectionIndex].collectionName = collectionName;
+      }
+    } else {
+      newCollectionList.push({
+        collectionName,
+        id: 1,
+        animeList: selectedMedia,
+      });
+    }
+    updateCollectionListToLocalStorage(newCollectionList);
+    setIsModalLoading(false);
+    onSubmitSuccess();
+  };
+
+  const renderErrMessage = () => {
     if (selectedStep === COLLECTION_MODAL_STEPS.FORM) {
       if (!collectionName.length) {
-        return "Collection name is required";
+        return t("collectionList.modal.addEditCollection.form.error.empty");
       } else {
         const findCollection = collectionList.find((collection) => collection.collectionName === collectionName);
         if (!!findCollection) {
-          return "Collection name already exist";
+          return t("collectionList.modal.addEditCollection.form.error.alreadyExist");
         }
 
         const regex = new RegExp(/a-zA-Z0-9!@#\$%\^\&*\)\(+=._-/g);
         if (collectionName.match(regex)) {
-          return "Collection name must not have special characters";
+          return t("collectionList.modal.addEditCollection.form.error.specialChar");
         }
       }
     }
   };
 
-  const renderForm = () => {
-    return (
-      <>
-        <FieldText
-          label={"Collection Name"}
-          name="collectionName"
-          onChange={handleCollectionNameChange}
-          value={collectionName}
-          helperMessage={renderHelperMessage()}
-        />
-        {!collectionList.length && (
-          <div
-            className={css`
-              width: 100%;
-              display: flex;
-              justify-content: center;
-              align-items: center;
-              margin-top: 10px;
-            `}
-          >
-            <Button
-              appearance="link"
-              onClick={() => setSelectedStep(COLLECTION_MODAL_STEPS.COLLECTION_LIST)}
-              className={css`
-                text-decoration: none !important;
-                :hover {
-                  text-decoration: none !important;
-                }
-              `}
-            >
-              <div
-                className={css`
-                  color: black !important;
-                  font-weight: normal;
-                  :hover {
-                    color: gray !important;
-                  }
-                `}
-              >
-                See collection list
-              </div>
-            </Button>
-          </div>
-        )}
-      </>
-    );
+  const renderForm = () => (
+    <CollectionForm
+      collectionName={collectionName}
+      onCollectionNameChange={handleCollectionNameChange}
+      errorMessage={renderErrMessage()}
+    />
+  );
+
+  const renderAnimeList = () => {
+    return <AnimeListToPick selectedMedia={selectedMedia} setSelectedMedia={setSelectedMedia} />;
+  };
+
+  const renderContent = () => {
+    switch (selectedStep) {
+      case COLLECTION_MODAL_STEPS.FORM:
+        return renderForm();
+      case COLLECTION_MODAL_STEPS.ANIME_LIST:
+        return renderAnimeList();
+      default:
+        break;
+    }
+  };
+
+  const onModalSubmit = () => {
+    switch (selectedStep) {
+      case COLLECTION_MODAL_STEPS.FORM:
+        if (isEdit) onSubmit();
+        else setSelectedStep(COLLECTION_MODAL_STEPS.ANIME_LIST);
+        break;
+      case COLLECTION_MODAL_STEPS.ANIME_LIST:
+        onSubmit();
+        break;
+      default:
+        break;
+    }
+  };
+
+  const isModalDisabled = (): boolean => {
+    switch (selectedStep) {
+      case COLLECTION_MODAL_STEPS.FORM:
+        return !!renderErrMessage();
+      case COLLECTION_MODAL_STEPS.ANIME_LIST:
+        return !selectedMedia.length;
+      default:
+        return false;
+    }
   };
 
   return (
     <Modal
-      isDisabled={!!renderHelperMessage()}
+      isDisabled={isModalDisabled()}
       onCancel={onCancel}
-      cancelText={"cancel"}
-      onSubmit={onSubmit}
-      submitText={"submit"}
+      cancelText={t("modal.cancel")}
+      onSubmit={onModalSubmit}
+      submitText={t("modal.submit")}
     >
-      {renderForm()}
+      {renderContent()}
     </Modal>
   );
 };

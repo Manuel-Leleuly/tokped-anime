@@ -1,5 +1,5 @@
 import React, { FC, useEffect, useState } from "react";
-import { CollectionList } from "../../../../models/Collection";
+import { CollectionData, CollectionList } from "../../../../models/Collection";
 import { RequestType } from "../../../../models/Response";
 import { getCollectionListFromLocalStorage } from "../../../../utils/utils";
 import styled from "@emotion/styled";
@@ -7,57 +7,15 @@ import { WINDOW_WIDTH } from "../../../../constants/constants";
 import { css } from "@emotion/css";
 import Button from "@atlaskit/button";
 import { t } from "../../../../i18n/i18n";
-import { Modal } from "../../../../components/Components";
 import { AddCollectionModal } from "./Modal";
+import CollectionCard from "./Modal/AddCollectionModal/CollectionCard";
 
 const CollectionWrapper = styled.div`
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
-`;
-
-const CollectionDiv = styled.div`
-  width: 300px;
-  height: 200px;
-  position: relative;
-  overflow: hidden;
-`;
-
-const CollectionImage = styled.img`
-  width: 20px;
-  height: 30px;
-`;
-
-const CollectionOverlay = styled.div`
-  width: 100%;
-  height: 100vh;
-  position: absolute;
-  z-index: 10;
-  top: 0;
-  background: black;
-  opacity: 0.5;
-`;
-
-const CollectionInfo = styled.div`
-  width: 100%;
-  height: 100%;
-  padding: 20px;
-  position: absolute;
-  z-index: 20;
-  bottom: 0;
 
   @media (max-width: ${WINDOW_WIDTH.md}) {
-    padding: 10px;
-  }
-`;
-
-const CollectionTitle = styled.p`
-  font-size: 20px;
-  white-space: nowrap;
-  text-overflow: ellipsis;
-  overflow: hidden;
-
-  @media (max-width: ${WINDOW_WIDTH.md}) {
-    font-size: 10px;
+    grid-template-columns: 1fr;
   }
 `;
 
@@ -74,6 +32,8 @@ const CollectionNotFound = styled.div`
 
 enum COLLECTION_MODALS {
   "ADD" = "ADD",
+  "EDIT" = "EDIT",
+  "REMOVE" = "REMOVE",
 }
 
 type COLLECTION_MODALS_TYPE = keyof typeof COLLECTION_MODALS;
@@ -85,9 +45,15 @@ const Collection: FC = () => {
     error: null,
   });
 
+  const [selectedCollection, setSelectedCollection] = useState<CollectionData | null>(null);
+
   const [selectedModal, setSelectedModal] = useState<COLLECTION_MODALS_TYPE | null>(null);
 
   useEffect(() => {
+    getCollectionList();
+  }, []);
+
+  const getCollectionList = () => {
     setCollectionList((prevState) => ({ ...prevState, isLoading: true }));
     try {
       setCollectionList((prevState) => ({
@@ -99,9 +65,7 @@ const Collection: FC = () => {
     } catch (error) {
       setCollectionList((prevState) => ({ ...prevState, error: error as Error, isLoading: false }));
     }
-  }, []);
-
-  console.log("collection selected modal =", selectedModal);
+  };
 
   if (!collectionList.data.length) {
     return (
@@ -115,11 +79,12 @@ const Collection: FC = () => {
         {selectedModal === COLLECTION_MODALS.ADD && (
           <AddCollectionModal
             collectionList={collectionList.data}
-            onSubmit={() => setSelectedModal(null)}
+            onSubmitSuccess={() => {
+              setSelectedModal(null);
+              getCollectionList();
+            }}
             onCancel={() => setSelectedModal(null)}
-          >
-            This is a modal
-          </AddCollectionModal>
+          />
         )}
       </>
     );
@@ -127,21 +92,56 @@ const Collection: FC = () => {
 
   return (
     <>
+      <div
+        className={css`
+          width: 100%;
+          text-align: center;
+          margin-bottom: 20px;
+        `}
+      >
+        <Button appearance="link" onClick={() => setSelectedModal(COLLECTION_MODALS.ADD)}>
+          {t("collectionList.notFound.button.label")}
+        </Button>
+      </div>
       <CollectionWrapper>
         {collectionList.data.map((collection) => (
-          <CollectionDiv key={collection.id}>
-            {collection.animeList.map((anime) => {
-              if (anime.coverImage.medium) {
-                return <CollectionImage key={anime.id} src={anime.coverImage.medium} alt={anime.title.english || ""} />;
-              }
-            })}
-            <CollectionOverlay />
-            <CollectionInfo>
-              <CollectionTitle>{collection.collectionName}</CollectionTitle>
-            </CollectionInfo>
-          </CollectionDiv>
+          <CollectionCard
+            key={collection.id}
+            collectionData={collection}
+            onEditButtonClick={(selectedCollectionData) => {
+              setSelectedCollection(selectedCollectionData);
+              setSelectedModal(COLLECTION_MODALS.EDIT);
+            }}
+            onRemoveButtonClick={(selectedCollectionData) => {
+              setSelectedCollection(selectedCollectionData);
+              setSelectedModal(COLLECTION_MODALS.REMOVE);
+            }}
+          />
         ))}
       </CollectionWrapper>
+      {selectedModal === COLLECTION_MODALS.ADD && (
+        <AddCollectionModal
+          collectionList={collectionList.data}
+          onSubmitSuccess={() => {
+            setSelectedModal(null);
+            getCollectionList();
+          }}
+          onCancel={() => setSelectedModal(null)}
+        />
+      )}
+      {selectedModal === COLLECTION_MODALS.EDIT && selectedCollection && (
+        <AddCollectionModal
+          collectionList={collectionList.data}
+          onSubmitSuccess={() => {
+            setSelectedModal(null);
+            getCollectionList();
+          }}
+          onCancel={() => setSelectedModal(null)}
+          isEdit
+          selectedCollectionName={selectedCollection.collectionName}
+          collectionId={selectedCollection.id}
+        />
+      )}
     </>
   );
 };
