@@ -1,4 +1,9 @@
 {
+  "animeDetail.description.description": "説明",
+  "animeDetail.description.episodes": "総エピソード",
+  "animeDetail.description.rating": "評価",
+  "animeDetail.notFound.label": "お探しのアニメは存在しません",
+  "animeList.notFound.label": "アニメはありません。 もう一度やり直してください。",
   "loading.label": "読み込み中...",
   "nav.menu.animeList.label": "アニメリスト",
   "nav.menu.button.label": "メニュー",

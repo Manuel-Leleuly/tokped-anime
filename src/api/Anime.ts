@@ -66,6 +66,9 @@ export const fetchAnimeDetail = (animeId: number, abortSignal?: AbortSignal) => 
                     }
                   }
                 }
+                episodes
+                genres
+                averageScore
               }
         }
     `;

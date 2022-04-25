@@ -101,7 +101,7 @@ const AnimeDetail: FC<Props> = (props) => {
           })}
         >
           <Center>
-            <p>{t("animeList.notFound.label")}</p>
+            <p>{t("animeDetail.notFound.label")}</p>
           </Center>
         </span>
       </AnimeDetailPage>
@@ -115,14 +115,13 @@ const AnimeDetail: FC<Props> = (props) => {
           Media: { title },
         },
       } = animeDetail;
-      switch (currentLanguage) {
-        case LANGUAGE_CODES.en:
-          return title.english || "";
-        case LANGUAGE_CODES.jp:
-          return title.native || "";
-        default:
-          return "";
+      if (currentLanguage === LANGUAGE_CODES.en && title.english) {
+        return title.english;
       }
+      if (currentLanguage === LANGUAGE_CODES.jp && title.native) {
+        return title.native;
+      }
+      return "";
     }
     return "";
   };
@@ -134,11 +133,13 @@ const AnimeDetail: FC<Props> = (props) => {
         <Trailer site={animeDetail.data.Media.trailer.site || ""} videoCode={animeDetail.data.Media.trailer.id || ""} />
       )}
       <AnimeDescAndCast>
-        <Description description={animeDetail.data.Media.description || ""} />
+        <Description
+          description={animeDetail.data.Media.description}
+          averageScore={animeDetail.data.Media.averageScore}
+          episodes={animeDetail.data.Media.episodes}
+        />
         <Cast allCasts={animeDetail.data.Media.characters.nodes} />
       </AnimeDescAndCast>
-      <p>this is the anime detail page</p>
-      <p>{animeId}</p>
     </>
   );
 };

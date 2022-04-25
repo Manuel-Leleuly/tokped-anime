@@ -85,6 +85,9 @@ export const AnimeDetailResponse = T.type({
     description: T.union([T.string, T.null]),
     bannerImage: T.union([T.string, T.null]),
     characters: CharacterListResponse,
+    episodes: T.union([T.number, T.null]),
+    genres: T.union([T.array(T.string), T.null]),
+    averageScore: T.union([T.number, T.null])
   }),
 });
 

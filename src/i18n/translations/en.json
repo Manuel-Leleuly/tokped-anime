@@ -1,4 +1,9 @@
 {
+  "animeDetail.description.description": "Description",
+  "animeDetail.description.episodes": "Total Episodes",
+  "animeDetail.description.rating": "Rating",
+  "animeDetail.notFound.label": "The anime you are looking for does not exist",
+  "animeList.notFound.label": "There aren't any anime available. Please try again.",
   "loading.label": "Loading...",
   "nav.menu.animeList.label": "Anime List",
   "nav.menu.button.label": "Menu",

@@ -56,6 +56,7 @@ const CastWrapper = styled.div`
 
   @media (max-width: ${WINDOW_WIDTH.md}) {
     margin: 0;
+    margin-top: 20px;
   }
 `;
 

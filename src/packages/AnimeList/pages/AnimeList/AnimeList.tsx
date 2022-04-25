@@ -61,7 +61,7 @@ const AnimeList: FC = (props) => {
 
   const getAnimeList = async (pageNumber: number) => {
     if (animeList.isLoading) return;
-    setAnimeList((prevState) => ({ ...prevState, isLoading: true }));
+    setAnimeList((prevState) => ({ ...prevState, isLoading: true, data: null }));
     fetchAnimeList(pageNumber, ANIME_PER_PAGE, signal)
       .then((result) => {
         if (result.response && result.response.data) {
@@ -87,7 +87,7 @@ const AnimeList: FC = (props) => {
     return "";
   };
 
-  if (!animeList.data || animeList.isLoading) {
+  if (!animeList.data && animeList.isLoading) {
     return (
       <span
         className={css({
