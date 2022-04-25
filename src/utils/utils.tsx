@@ -39,3 +39,18 @@ export const convertMediaResponseToCollectionMedia = (media: MediaResponse): Col
     seasonYear: media.seasonYear,
   };
 };
+
+export const generateUniqueCollectionId = (collectionList: CollectionList): number => {
+  const MAX_VALUE = 100000;
+  let collectionId = Math.floor(Math.random() * MAX_VALUE);
+
+  const isCollectionIdAlreadyUsed = (selectedCollectionId: number): boolean => {
+    return !!collectionList.find((collection) => collection.id === selectedCollectionId);
+  };
+
+  while (isCollectionIdAlreadyUsed(collectionId)) {
+    collectionId = Math.floor(Math.random() * MAX_VALUE);
+  }
+
+  return collectionId;
+};

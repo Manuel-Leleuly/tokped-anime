@@ -7,12 +7,16 @@ import { WINDOW_WIDTH } from "../../../../constants/constants";
 import { css } from "@emotion/css";
 import Button from "@atlaskit/button";
 import { t } from "../../../../i18n/i18n";
-import { AddCollectionModal } from "./Modal";
+import { AddCollectionModal, RemoveCollectionModal } from "./Modal";
 import CollectionCard from "./Modal/AddCollectionModal/CollectionCard";
 
 const CollectionWrapper = styled.div`
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
+
+  @media (max-width: ${WINDOW_WIDTH.lg}) {
+    grid-template-columns: 1fr 1fr;
+  }
 
   @media (max-width: ${WINDOW_WIDTH.md}) {
     grid-template-columns: 1fr;
@@ -100,7 +104,7 @@ const Collection: FC = () => {
         `}
       >
         <Button appearance="link" onClick={() => setSelectedModal(COLLECTION_MODALS.ADD)}>
-          {t("collectionList.notFound.button.label")}
+          {t("collectionList.addNewCollection.button.label")}
         </Button>
       </div>
       <CollectionWrapper>
@@ -140,6 +144,17 @@ const Collection: FC = () => {
           isEdit
           selectedCollectionName={selectedCollection.collectionName}
           collectionId={selectedCollection.id}
+        />
+      )}
+      {selectedModal === COLLECTION_MODALS.REMOVE && selectedCollection && (
+        <RemoveCollectionModal
+          collectionData={selectedCollection}
+          onSubmitSuccess={() => {
+            getCollectionList();
+            setSelectedModal(null);
+          }}
+          onCancel={() => setSelectedModal(null)}
+          collectionList={collectionList.data}
         />
       )}
     </>

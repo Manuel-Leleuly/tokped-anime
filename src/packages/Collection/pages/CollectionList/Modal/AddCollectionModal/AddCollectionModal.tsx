@@ -3,7 +3,7 @@ import { CollectionList, CollectionMedia } from "../../../../../../models/Collec
 import { Modal } from "../../../../../../components/Components";
 import CollectionForm from "./CollectionForm";
 import AnimeListToPick from "./AnimeListToPick";
-import { updateCollectionListToLocalStorage } from "../../../../../../utils/utils";
+import { generateUniqueCollectionId, updateCollectionListToLocalStorage } from "../../../../../../utils/utils";
 import { t } from "../../../../../../i18n/i18n";
 
 interface Props {
@@ -43,7 +43,7 @@ const AddCollectionModal: FC<Props> = (props) => {
     } else {
       newCollectionList.push({
         collectionName,
-        id: 1,
+        id: generateUniqueCollectionId(collectionList),
         animeList: selectedMedia,
       });
     }
