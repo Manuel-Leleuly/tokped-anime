@@ -1,8 +1,6 @@
 import React, { ChangeEvent, FC } from "react";
 import { FieldText } from "../../../../../../components/Components";
-import { css } from "@emotion/css";
-import Button from "@atlaskit/button";
-import { CollectionList } from "../../../../../../models/Collection";
+import { t } from "../../../../../../i18n/i18n";
 
 interface Props {
   collectionName: string;
@@ -16,7 +14,7 @@ const CollectionForm: FC<Props> = (props) => {
   return (
     <>
       <FieldText
-        label={"Collection Name"}
+        label={t("collectionList.modal.addEditCollection.form.label")}
         name="collectionName"
         onChange={onCollectionNameChange}
         value={collectionName}

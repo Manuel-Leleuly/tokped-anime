@@ -130,6 +130,7 @@ const AnimeDetail: FC<Props> = (props) => {
         />
         <Cast allCasts={animeDetail.data.Media.characters.nodes} />
       </AnimeDescAndCast>
+      <br />
     </>
   );
 };
