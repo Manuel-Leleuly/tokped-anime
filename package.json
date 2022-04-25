@@ -4,7 +4,9 @@
   "private": true,
   "dependencies": {
     "@atlaskit/button": "^16.2.2",
+    "@atlaskit/form": "^8.5.3",
     "@atlaskit/modal-dialog": "^12.2.6",
+    "@atlaskit/textfield": "^5.1.9",
     "@emotion/css": "^11.9.0",
     "@emotion/react": "^11.9.0",
     "@emotion/styled": "^11.8.1",

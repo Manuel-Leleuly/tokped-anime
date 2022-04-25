@@ -4,10 +4,11 @@ import { RequestType } from "../../../../models/Response";
 import { getCollectionListFromLocalStorage } from "../../../../utils/utils";
 import styled from "@emotion/styled";
 import { WINDOW_WIDTH } from "../../../../constants/constants";
-import { Link } from "react-router-dom";
 import { css } from "@emotion/css";
 import Button from "@atlaskit/button";
 import { t } from "../../../../i18n/i18n";
+import { Modal } from "../../../../components/Components";
+import { AddCollectionModal } from "./Modal";
 
 const CollectionWrapper = styled.div`
   display: grid;
@@ -71,12 +72,20 @@ const CollectionNotFound = styled.div`
   }
 `;
 
+enum COLLECTION_MODALS {
+  "ADD" = "ADD",
+}
+
+type COLLECTION_MODALS_TYPE = keyof typeof COLLECTION_MODALS;
+
 const Collection: FC = () => {
   const [collectionList, setCollectionList] = useState<RequestType<CollectionList>>({
     isLoading: false,
     data: [],
     error: null,
   });
+
+  const [selectedModal, setSelectedModal] = useState<COLLECTION_MODALS_TYPE | null>(null);
 
   useEffect(() => {
     setCollectionList((prevState) => ({ ...prevState, isLoading: true }));
@@ -92,33 +101,48 @@ const Collection: FC = () => {
     }
   }, []);
 
+  console.log("collection selected modal =", selectedModal);
+
   if (!collectionList.data.length) {
     return (
-      <CollectionNotFound>
-        <p className={css({ marginRight: "5px" })}>{t("collectionList.notFound.message")}</p>
-        <Button appearance="link" onClick={() => console.log("yeay")}>
-          {t("collectionList.notFound.button.label")}
-        </Button>
-      </CollectionNotFound>
+      <>
+        <CollectionNotFound>
+          <p className={css({ marginRight: "5px" })}>{t("collectionList.notFound.message")}</p>
+          <Button appearance="link" onClick={() => setSelectedModal(COLLECTION_MODALS.ADD)}>
+            {t("collectionList.notFound.button.label")}
+          </Button>
+        </CollectionNotFound>
+        {selectedModal === COLLECTION_MODALS.ADD && (
+          <AddCollectionModal
+            collectionList={collectionList.data}
+            onSubmit={() => setSelectedModal(null)}
+            onCancel={() => setSelectedModal(null)}
+          >
+            This is a modal
+          </AddCollectionModal>
+        )}
+      </>
     );
   }
 
   return (
-    <CollectionWrapper>
-      {collectionList.data.map((collection) => (
-        <CollectionDiv key={collection.id}>
-          {collection.animeList.map((anime) => {
-            if (anime.coverImage.medium) {
-              return <CollectionImage key={anime.id} src={anime.coverImage.medium} alt={anime.title.english || ""} />;
-            }
-          })}
-          <CollectionOverlay />
-          <CollectionInfo>
-            <CollectionTitle>{collection.collectionName}</CollectionTitle>
-          </CollectionInfo>
-        </CollectionDiv>
-      ))}
-    </CollectionWrapper>
+    <>
+      <CollectionWrapper>
+        {collectionList.data.map((collection) => (
+          <CollectionDiv key={collection.id}>
+            {collection.animeList.map((anime) => {
+              if (anime.coverImage.medium) {
+                return <CollectionImage key={anime.id} src={anime.coverImage.medium} alt={anime.title.english || ""} />;
+              }
+            })}
+            <CollectionOverlay />
+            <CollectionInfo>
+              <CollectionTitle>{collection.collectionName}</CollectionTitle>
+            </CollectionInfo>
+          </CollectionDiv>
+        ))}
+      </CollectionWrapper>
+    </>
   );
 };
 export default Collection;
