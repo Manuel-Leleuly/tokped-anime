@@ -133,7 +133,7 @@ const AnimeDetail: FC<Props> = (props) => {
           averageScore={animeDetail.data.Media.averageScore}
           episodes={animeDetail.data.Media.episodes}
           addToCollection={{
-            label: "Add to collection",
+            label: t("animeDetail.description.addToCollection.label"),
             onCLick: () => {
               setSelectedModal(ANIME_DETAIL_MODALS.ADD);
             },

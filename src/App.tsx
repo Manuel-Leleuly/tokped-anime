@@ -17,7 +17,7 @@ function App() {
   };
 
   return (
-    <>
+    <div id="App">
       <Nav />
       <Suspense fallback={<Fallback />}>
         <Switch>
@@ -28,7 +28,7 @@ function App() {
           <Route path="*" render={renderAppPage(AnimeListRoutes)} />
         </Switch>
       </Suspense>
-    </>
+    </div>
   );
 }
 

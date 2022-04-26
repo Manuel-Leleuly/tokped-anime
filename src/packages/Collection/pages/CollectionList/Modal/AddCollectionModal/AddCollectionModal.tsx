@@ -123,11 +123,9 @@ const AddCollectionModal: FC<Props> = (props) => {
   };
 
   const renderCollectionListToPick = () => {
-    const isRadioDisabled = (): boolean => {
+    const isRadioDisabled = (selectedCollectionData: CollectionData): boolean => {
       if (selectedAnime) {
-        return !!collectionList.find(
-          (collection) => !!collection.animeList.find((anime) => anime.id === selectedAnime.Media.id)
-        );
+        return !!selectedCollectionData.animeList.find((anime) => anime.id === selectedAnime.Media.id);
       }
       return false;
     };
@@ -137,7 +135,7 @@ const AddCollectionModal: FC<Props> = (props) => {
         collectionList={collectionList}
         selectedCollection={selectedCollection}
         setSelectedCollection={setSelectedCollection}
-        isRadioDisabled={isRadioDisabled()}
+        isRadioDisabled={isRadioDisabled}
         onCreateANewCollectionClick={() => setSelectedStep(COLLECTION_MODAL_STEPS.FORM)}
       />
     );

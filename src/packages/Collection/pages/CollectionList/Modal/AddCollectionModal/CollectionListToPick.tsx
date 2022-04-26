@@ -9,7 +9,7 @@ interface Props {
   collectionList: CollectionList;
   selectedCollection: CollectionData | null;
   setSelectedCollection: Dispatch<SetStateAction<CollectionData | null>>;
-  isRadioDisabled?: boolean;
+  isRadioDisabled?: (selectedCollectionData: CollectionData) => boolean;
   onCreateANewCollectionClick: () => void;
 }
 
@@ -50,7 +50,7 @@ const CollectionListToPick: FC<Props> = (props) => {
             value={collection.id.toString()}
             isChecked={selectedCollection ? selectedCollection.collectionName === collection.collectionName : undefined}
             onChange={() => onRadioSelected(collection)}
-            isDisabled={isRadioDisabled}
+            isDisabled={isRadioDisabled ? isRadioDisabled(collection) : undefined}
           />
         </div>
       ))}

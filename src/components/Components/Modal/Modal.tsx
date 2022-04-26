@@ -1,4 +1,4 @@
-import React, { ReactNode } from "react";
+import React, { ReactNode, useEffect } from "react";
 import styled from "@emotion/styled";
 import { WINDOW_WIDTH } from "../../../constants/constants";
 import { css } from "@emotion/css";
@@ -15,7 +15,7 @@ interface Props {
 }
 
 const ModalOverlay = styled.div`
-  position: absolute;
+  position: fixed;
   z-index: 1000;
   top: 0;
   bottom: 0;
@@ -26,7 +26,7 @@ const ModalOverlay = styled.div`
 `;
 
 const ModalWrapper = styled.div`
-  position: absolute;
+  position: fixed;
   z-index: 1001;
   top: 50%;
   left: 50%;
@@ -55,8 +55,21 @@ const ButtonWrapper = styled.div`
 const Modal = (props: Props) => {
   const { children, onSubmit, onCancel, submitText, cancelText, isDisabled } = props;
 
+  useEffect(() => {
+    const bodyElement = document.getElementById("Body");
+    if (bodyElement) {
+      bodyElement.style.overflow = "hidden";
+    }
+
+    return () => {
+      if (bodyElement) {
+        bodyElement.style.overflow = "";
+      }
+    };
+  }, []);
+
   return (
-    <>
+    <div>
       <ModalOverlay />
       <ModalWrapper>
         {children}
@@ -74,7 +87,7 @@ const Modal = (props: Props) => {
           )}
         </ButtonWrapper>
       </ModalWrapper>
-    </>
+    </div>
   );
 };
 export default Modal;
