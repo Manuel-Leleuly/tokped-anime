@@ -1,12 +1,12 @@
 import React, { FC, useEffect, useState } from "react";
 import { RouteComponentProps } from "react-router-dom";
-import { CollectionData, CollectionList } from "../../../../models/Collection";
+import { CollectionData } from "../../../../models/Collection";
 import { getCollectionListFromLocalStorage } from "../../../../utils/utils";
 import { t } from "../../../../i18n/i18n";
 import CollectionAnimeList from "./CollectionAnimeList";
 import { AddCollectionModal } from "../CollectionList/Modal";
-import Button from "@atlaskit/button";
 import { css } from "@emotion/css";
+import CollectionName from "./CollectionName";
 
 interface Props extends RouteComponentProps<{ collectionId: string }> {}
 
@@ -51,50 +51,10 @@ const CollectionDetail: FC<Props> = (props) => {
 
   return (
     <>
-      <div
-        className={css`
-          width: 100%;
-          display: flex;
-          justify-content: center;
-          align-items: center;
-        `}
-      >
-        <div
-          className={css`
-            margin-right: 5px;
-            font-size: 30px;
-          `}
-        >
-          {selectedCollection.collectionName}
-        </div>
-        <div>
-          [
-          <Button
-            className={css`
-              text-decoration: none !important;
-              :hover {
-                text-decoration: none !important;
-              }
-            `}
-            appearance="link"
-            onClick={() => setSelectedModal(COLLECTION_DETAIL_MODALS.EDIT)}
-          >
-            <p
-              className={css`
-                color: black !important;
-                margin: 0;
-                font-weight: normal;
-                :hover {
-                  color: gray !important;
-                }
-              `}
-            >
-              {t("common.edit")}
-            </p>
-          </Button>
-          ]
-        </div>
-      </div>
+      <CollectionName
+        collectionName={selectedCollection.collectionName}
+        onEditButtonClick={() => setSelectedModal(COLLECTION_DETAIL_MODALS.EDIT)}
+      />
       <CollectionAnimeList
         animeList={selectedCollection.animeList}
         reFetchFunction={getCollectionData}

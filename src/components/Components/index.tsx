@@ -8,4 +8,6 @@ import Page from "./Page/Page";
 import Modal from "./Modal/Modal";
 import FieldText from "./FieldText/FieldText";
 
-export { AnimeCard, BannerCard, Pagination, Center, Fallback, Page, Modal, FieldText };
+import ButtonLink from "./Button/ButtonLink/ButtonLink";
+
+export { AnimeCard, BannerCard, Pagination, Center, Fallback, Page, Modal, FieldText, ButtonLink };

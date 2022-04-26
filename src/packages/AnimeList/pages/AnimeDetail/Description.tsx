@@ -1,13 +1,18 @@
 import styled from "@emotion/styled";
-import React, { FC } from "react";
+import React, { FC, ReactNode, useEffect, useState } from "react";
 import { WINDOW_WIDTH } from "../../../../constants/constants";
 import DOMPurify from "dompurify";
 import { t } from "../../../../i18n/i18n";
 import { css } from "@emotion/css";
 import StarRatingComponent from "react-star-rating-component";
 import { FaRegStar, FaStar, FaStarHalfAlt } from "react-icons/fa";
+import { CollectionList } from "../../../../models/Collection";
+import { getCollectionListFromLocalStorage } from "../../../../utils/utils";
+import { Link, useHistory } from "react-router-dom";
+import { ButtonLink } from "../../../../components/Components";
 
 interface Props {
+  animeId: number;
   description: string | null;
   episodes: number | null;
   averageScore: number | null;
@@ -33,7 +38,7 @@ const DescriptionTitle = styled.p`
 `;
 
 const Description: FC<Props> = (props) => {
-  const { description, averageScore, episodes } = props;
+  const { description, averageScore, episodes, animeId } = props;
 
   return (
     <DescriptionWrapper>
@@ -55,6 +60,7 @@ const Description: FC<Props> = (props) => {
           <StarRating averageScore={averageScore} />
         </div>
       )}
+      <CollectionInfo animeId={animeId} />
     </DescriptionWrapper>
   );
 };
@@ -106,6 +112,54 @@ const StarRating: FC<StarRatingProps> = (props) => {
         />
       </div>
       <p>{rating}</p>
+    </div>
+  );
+};
+
+interface CollectionInfoProps {
+  animeId: number;
+}
+
+const CollectionInfo: FC<CollectionInfoProps> = (props) => {
+  const history = useHistory();
+  const { animeId } = props;
+
+  const [selectedCollections, setSelectedCollections] = useState<CollectionList>([]);
+
+  useEffect(() => {
+    const collectionList = getCollectionListFromLocalStorage();
+    const selectedCollectionList = collectionList.filter((collection) => {
+      return !!collection.animeList.find((anime) => anime.id === animeId);
+    });
+    setSelectedCollections(selectedCollectionList);
+  }, []);
+
+  if (!selectedCollections.length) return <div />;
+
+  return (
+    <div>
+      <DescriptionTitle>{t("animeDetail.description.collection")}</DescriptionTitle>
+      <div
+        className={css`
+          display: flex;
+          justify-content: start;
+          align-items: center;
+        `}
+      >
+        {selectedCollections.map((collection) => (
+          <div
+            key={collection.id}
+            className={css`
+              margin-right: 5px;
+            `}
+          >
+            <ButtonLink
+              onClick={() => history.push(`/collection/${collection.id}`)}
+              label={collection.collectionName}
+            />
+          </div>
+        ))}
+      </div>
     </div>
   );
 };

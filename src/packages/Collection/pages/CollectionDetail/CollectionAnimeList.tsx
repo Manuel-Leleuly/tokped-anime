@@ -2,12 +2,11 @@ import React, { FC, useState } from "react";
 import { CollectionData, CollectionMedia } from "../../../../models/Collection";
 import styled from "@emotion/styled";
 import { WINDOW_WIDTH } from "../../../../constants/constants";
-import { AnimeCard } from "../../../../components/Components";
+import { AnimeCard, ButtonLink } from "../../../../components/Components";
 import { t } from "../../../../i18n/i18n";
 import { Link } from "react-router-dom";
 import { getTitle } from "../../../../utils/utils";
 import { css } from "@emotion/css";
-import Button from "@atlaskit/button";
 import { RemoveAnimeFromCollectionModal } from "./Modals";
 
 interface Props {
@@ -82,31 +81,13 @@ const CollectionAnimeList: FC<Props> = (props) => {
                   align-items: center;
                 `}
               >
-                <Button
-                  appearance="link"
-                  className={css`
-                    text-decoration: none !important;
-                    :hover {
-                      text-decoration: none !important;
-                    }
-                  `}
+                <ButtonLink
                   onClick={() => {
                     setSelectedCollectionMedia(anime);
                     setSelectedModal(COLLECTION_ANIME_LIST_MODALS.REMOVE);
                   }}
-                >
-                  <p
-                    className={css`
-                      margin: 0;
-                      color: black !important;
-                      :hover {
-                        color: gray !important;
-                      }
-                    `}
-                  >
-                    {t("common.remove")}
-                  </p>
-                </Button>
+                  label={t("common.remove")}
+                />
               </div>
             </div>
           ))}

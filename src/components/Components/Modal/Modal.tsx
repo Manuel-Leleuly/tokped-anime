@@ -3,6 +3,7 @@ import styled from "@emotion/styled";
 import { WINDOW_WIDTH } from "../../../constants/constants";
 import Button from "@atlaskit/button";
 import { css } from "@emotion/css";
+import ButtonLink from "../Button/ButtonLink/ButtonLink";
 
 interface Props {
   children: ReactNode;
@@ -51,17 +52,6 @@ const ButtonWrapper = styled.div`
   }
 `;
 
-const CancelText = styled.p`
-  color: black !important;
-  text-decoration: none !important;
-  margin: 0;
-
-  :hover {
-    color: gray !important;
-    text-decoration: none !important;
-  }
-`;
-
 const SubmitText = styled.p`
   color: white !important;
   margin: 0;
@@ -80,15 +70,7 @@ const Modal = (props: Props) => {
       <ModalWrapper>
         {children}
         <ButtonWrapper>
-          <Button
-            appearance="link"
-            onClick={onCancel}
-            className={css`
-              text-decoration: none !important;
-            `}
-          >
-            <CancelText>{cancelText}</CancelText>
-          </Button>
+          <ButtonLink onClick={onCancel} label={cancelText} />
           {onSubmit && submitText && (
             <Button
               appearance="primary"
