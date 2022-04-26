@@ -2,7 +2,7 @@ import React, { FC, useState } from "react";
 import { CollectionData, CollectionMedia } from "../../../../models/Collection";
 import styled from "@emotion/styled";
 import { WINDOW_WIDTH } from "../../../../constants/constants";
-import { AnimeCard, ButtonLink } from "../../../../components/Components";
+import { AnimeCard, AnimeListWrapper, ButtonLink } from "../../../../components/Components";
 import { t } from "../../../../i18n/i18n";
 import { Link } from "react-router-dom";
 import { getTitle } from "../../../../utils/utils";
@@ -22,26 +22,6 @@ const AnimeListPage = styled.div`
 
   @media (max-width: ${WINDOW_WIDTH.md}) {
     padding: 0;
-  }
-`;
-
-const AnimeListWrapper = styled.div`
-  width: auto;
-  margin-top: 50px;
-
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
-
-  @media (max-width: ${WINDOW_WIDTH.lg}) {
-    grid-template-columns: 1fr 1fr 1fr 1fr;
-  }
-
-  @media (max-width: ${WINDOW_WIDTH.md}) {
-    grid-template-columns: 1fr 1fr 1fr;
-  }
-
-  @media (max-width: ${WINDOW_WIDTH.sm}) {
-    grid-template-columns: 1fr 1fr;
   }
 `;
 

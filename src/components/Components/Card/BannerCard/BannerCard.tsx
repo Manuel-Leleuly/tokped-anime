@@ -1,17 +1,10 @@
 import styled from "@emotion/styled";
 import React, { FC } from "react";
 import { WINDOW_WIDTH } from "../../../../constants/constants";
-import { ButtonFull } from "../../index";
-import { css } from "@emotion/css";
 
 interface Props {
   bannerImage: string | null;
   title: string;
-  addToCollection?: {
-    label: string;
-    onCLick: () => void;
-    isDisabled?: boolean;
-  };
 }
 
 const BannerCardDiv = styled.div`
@@ -64,7 +57,7 @@ const BannerCardImage = styled.img`
 `;
 
 const BannerCard: FC<Props> = (props) => {
-  const { bannerImage, title, addToCollection } = props;
+  const { bannerImage, title } = props;
 
   return (
     <BannerCardDiv>
@@ -72,19 +65,6 @@ const BannerCard: FC<Props> = (props) => {
       <BannerCardOverlay />
       <BannerCardTitleWrapper>
         <BannerCardTitle>{title}</BannerCardTitle>
-        {addToCollection && (
-          <div
-            className={css`
-              margin-top: 5px;
-            `}
-          >
-            <ButtonFull
-              label={addToCollection.label}
-              onClick={addToCollection.onCLick}
-              isDisabled={addToCollection.isDisabled}
-            />
-          </div>
-        )}
       </BannerCardTitleWrapper>
     </BannerCardDiv>
   );

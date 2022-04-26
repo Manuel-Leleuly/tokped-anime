@@ -3,7 +3,7 @@ import styled from "@emotion/styled";
 import React, { FC, useContext, useEffect, useState } from "react";
 import { Link, useHistory } from "react-router-dom";
 import { fetchAnimeList } from "../../../../api/Anime";
-import { AnimeCard, Center, Pagination } from "../../../../components/Components";
+import { AnimeCard, AnimeListWrapper, Center, Pagination } from "../../../../components/Components";
 import { WINDOW_WIDTH } from "../../../../constants/constants";
 import { AbortControllerContext } from "../../../../context/AbortControllerContext";
 import { t } from "../../../../i18n/i18n";
@@ -22,26 +22,6 @@ const AnimeListPage = styled.div`
 
   @media (max-width: ${WINDOW_WIDTH.md}) {
     padding: 0;
-  }
-`;
-
-const AnimeListWrapper = styled.div`
-  width: auto;
-  margin-top: 50px;
-
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
-
-  @media (max-width: ${WINDOW_WIDTH.lg}) {
-    grid-template-columns: 1fr 1fr 1fr 1fr;
-  }
-
-  @media (max-width: ${WINDOW_WIDTH.md}) {
-    grid-template-columns: 1fr 1fr 1fr;
-  }
-
-  @media (max-width: ${WINDOW_WIDTH.sm}) {
-    grid-template-columns: 1fr 1fr;
   }
 `;
 

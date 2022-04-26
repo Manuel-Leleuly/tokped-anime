@@ -6,7 +6,6 @@
     "@atlaskit/button": "^16.2.2",
     "@atlaskit/checkbox": "^12.3.11",
     "@atlaskit/form": "^8.5.3",
-    "@atlaskit/modal-dialog": "^12.2.6",
     "@atlaskit/radio": "^5.3.10",
     "@atlaskit/textfield": "^5.1.9",
     "@emotion/css": "^11.9.0",

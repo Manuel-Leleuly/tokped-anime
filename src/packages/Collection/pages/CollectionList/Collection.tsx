@@ -14,7 +14,7 @@ const CollectionWrapper = styled.div`
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
 
-  @media (max-width: ${WINDOW_WIDTH.lg}) {
+  @media (max-width: 1050px) {
     grid-template-columns: 1fr 1fr;
   }
 

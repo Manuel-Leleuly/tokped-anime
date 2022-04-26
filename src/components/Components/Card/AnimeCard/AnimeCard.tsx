@@ -1,6 +1,7 @@
 import { css } from "@emotion/css";
 import styled from "@emotion/styled";
 import React, { FC } from "react";
+import { WINDOW_WIDTH } from "../../../../constants/constants";
 
 interface Props {
   mediumImageUrl: string | null;
@@ -13,6 +14,11 @@ const MovieCardWrapper = styled.div`
   height: 250px;
   position: relative;
   margin: 5px;
+
+  @media (max-width: ${WINDOW_WIDTH.sm}) {
+    width: 120px;
+    height: 220px;
+  }
 `;
 
 const Backdrop = styled.img`
@@ -22,6 +28,11 @@ const Backdrop = styled.img`
   position: absolute;
   display: block;
   top: 0;
+
+  @media (max-width: ${WINDOW_WIDTH.sm}) {
+    width: 120px;
+    height: 220px;
+  }
 `;
 
 const MovieInfoBackdrop = styled.div`

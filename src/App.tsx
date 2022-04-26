@@ -1,6 +1,5 @@
 import React, { lazy, Suspense } from "react";
 import { Route, Switch } from "react-router-dom";
-import "./App.css";
 import { Fallback } from "./components/Components";
 import Nav from "./components/Nav/Nav";
 

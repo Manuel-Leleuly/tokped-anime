@@ -11,4 +11,18 @@ import FieldText from "./FieldText/FieldText";
 import ButtonLink from "./Button/ButtonLink/ButtonLink";
 import ButtonFull from "./Button/ButtonFull/ButtonFull";
 
-export { AnimeCard, BannerCard, Pagination, Center, Fallback, Page, Modal, FieldText, ButtonLink, ButtonFull };
+import AnimeListWrapper from "./AnimeListWrapper/AnimeListWrapper";
+
+export {
+  AnimeCard,
+  BannerCard,
+  Pagination,
+  Center,
+  Fallback,
+  Page,
+  Modal,
+  FieldText,
+  ButtonLink,
+  ButtonFull,
+  AnimeListWrapper,
+};

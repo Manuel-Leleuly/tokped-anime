@@ -60,6 +60,7 @@ const CollectionDetail: FC<Props> = (props) => {
         reFetchFunction={getCollectionData}
         collectionData={selectedCollection}
       />
+      <br />
       {selectedModal === COLLECTION_DETAIL_MODALS.EDIT && (
         <AddCollectionModal
           collectionList={getCollectionListFromLocalStorage()}

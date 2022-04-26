@@ -29,10 +29,13 @@ const CollectionForm: FC<Props> = (props) => {
         value={collectionName}
         helperMessage={errorMessage}
       />
-      {showSeeCollectionListButton && onSeeCollectionListButtonClick && (
+      {!!showSeeCollectionListButton && onSeeCollectionListButtonClick && (
         <div
           className={css`
-            margin-top: 5px;
+            margin-top: 10px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
           `}
         >
           <ButtonLink

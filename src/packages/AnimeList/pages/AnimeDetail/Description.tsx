@@ -9,13 +9,18 @@ import { FaRegStar, FaStar, FaStarHalfAlt } from "react-icons/fa";
 import { CollectionList } from "../../../../models/Collection";
 import { getCollectionListFromLocalStorage } from "../../../../utils/utils";
 import { Link, useHistory } from "react-router-dom";
-import { ButtonLink } from "../../../../components/Components";
+import { ButtonFull, ButtonLink } from "../../../../components/Components";
 
 interface Props {
   animeId: number;
   description: string | null;
   episodes: number | null;
   averageScore: number | null;
+  addToCollection?: {
+    label: string;
+    onCLick: () => void;
+    isDisabled?: boolean;
+  };
 }
 
 const DescriptionWrapper = styled.div`
@@ -38,7 +43,7 @@ const DescriptionTitle = styled.p`
 `;
 
 const Description: FC<Props> = (props) => {
-  const { description, averageScore, episodes, animeId } = props;
+  const { description, averageScore, episodes, animeId, addToCollection } = props;
 
   return (
     <DescriptionWrapper>
@@ -61,6 +66,19 @@ const Description: FC<Props> = (props) => {
         </div>
       )}
       <CollectionInfo animeId={animeId} />
+      {addToCollection && (
+        <div
+          className={css`
+            margin-top: 5px;
+          `}
+        >
+          <ButtonFull
+            label={addToCollection.label}
+            onClick={addToCollection.onCLick}
+            isDisabled={addToCollection.isDisabled}
+          />
+        </div>
+      )}
     </DescriptionWrapper>
   );
 };

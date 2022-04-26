@@ -114,7 +114,7 @@ const AddCollectionModal: FC<Props> = (props) => {
       onCollectionNameChange={handleCollectionNameChange}
       errorMessage={renderErrMessage()}
       onSeeCollectionListButtonClick={() => setSelectedStep(COLLECTION_MODAL_STEPS.COLLECTION_LIST)}
-      showSeeCollectionListButton={!!collectionList.length}
+      showSeeCollectionListButton={!!collectionList.length && !isEdit}
     />
   );
 

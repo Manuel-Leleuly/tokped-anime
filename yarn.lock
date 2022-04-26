@@ -45,19 +45,6 @@
     prop-types "^15.5.10"
     use-memo-one "^1.1.1"
 
-"@atlaskit/blanket@^12.2.0":
-  version "12.2.11"
-  resolved "https://registry.yarnpkg.com/@atlaskit/blanket/-/blanket-12.2.11.tgz#85525bf9514fb9f7a81db21b85f840abda1953f9"
-  integrity sha512-DspOr1wzpBiTgONebnHz246ORtQhkqTS1wopxgFP4ysXID0FtRpK5N530sELWBT4Cfn8rZ6G+FyCUr/uEAZJTQ==
-  dependencies:
-    "@atlaskit/analytics-next" "^8.2.0"
-    "@atlaskit/codemod-utils" "^4.0.0"
-    "@atlaskit/ds-lib" "^1.4.0"
-    "@atlaskit/theme" "^12.1.0"
-    "@atlaskit/tokens" "^0.9.0"
-    "@babel/runtime" "^7.0.0"
-    "@emotion/core" "^10.0.9"
-
 "@atlaskit/button@^16.2.2":
   version "16.2.2"
   resolved "https://registry.yarnpkg.com/@atlaskit/button/-/button-16.2.2.tgz#8874b799f5f2c222b5e9e0dc887f87eb86d8a583"
@@ -98,16 +85,6 @@
   dependencies:
     "@babel/runtime" "^7.0.0"
 
-"@atlaskit/focus-ring@^1.0.0":
-  version "1.0.3"
-  resolved "https://registry.yarnpkg.com/@atlaskit/focus-ring/-/focus-ring-1.0.3.tgz#c495a94b0e9ae16b350c4e73d34036df9a7007e8"
-  integrity sha512-2T+R3FJ7Ejr//VuzO31SSEG9N/2U5j99dKr01nCrr1UwmpU9aj5Aq/fphCAIA4d/J5VbolTM5sVYFU6QdB0yRA==
-  dependencies:
-    "@atlaskit/theme" "^12.1.0"
-    "@atlaskit/tokens" "^0.9.0"
-    "@babel/runtime" "^7.0.0"
-    "@emotion/core" "^10.0.9"
-
 "@atlaskit/form@^8.5.3":
   version "8.5.3"
   resolved "https://registry.yarnpkg.com/@atlaskit/form/-/form-8.5.3.tgz#320acb751f7e90638c523dab220a8c125c3786a3"
@@ -133,44 +110,6 @@
     "@atlaskit/tokens" "^0.9.0"
     "@babel/runtime" "^7.0.0"
     "@emotion/core" "^10.0.9"
-
-"@atlaskit/modal-dialog@^12.2.6":
-  version "12.2.6"
-  resolved "https://registry.yarnpkg.com/@atlaskit/modal-dialog/-/modal-dialog-12.2.6.tgz#6e226f7d20b1a885b5f9e8dd527048c3c7df0166"
-  integrity sha512-8RGMoZiO0GX57ypMIBmhaBe75YZkR+DDLoorTxh2iiJVO6HXswkxY3jNsFRQjZxrl6DDlIW53gKnWVj9cj+/AQ==
-  dependencies:
-    "@atlaskit/analytics-next" "^8.2.0"
-    "@atlaskit/blanket" "^12.2.0"
-    "@atlaskit/codemod-utils" "^4.0.0"
-    "@atlaskit/ds-lib" "^1.4.0"
-    "@atlaskit/focus-ring" "^1.0.0"
-    "@atlaskit/icon" "^21.10.0"
-    "@atlaskit/motion" "^1.0.0"
-    "@atlaskit/portal" "^4.1.0"
-    "@atlaskit/theme" "^12.1.0"
-    "@atlaskit/tokens" "^0.9.0"
-    "@babel/runtime" "^7.0.0"
-    "@emotion/core" "^10.0.9"
-    raf-schd "^4.0.3"
-    react-focus-lock "^2.5.2"
-    react-scrolllock "^5.0.1"
-    react-uid "^2.2.0"
-
-"@atlaskit/motion@^1.0.0":
-  version "1.0.3"
-  resolved "https://registry.yarnpkg.com/@atlaskit/motion/-/motion-1.0.3.tgz#e5f19f68538f97b9fc3c5cbbf953b76644c9b595"
-  integrity sha512-evdpbukDyh+KonLCycPVBVilfRUUk1ntX2hB6Uz+4NHmgSZWEjJx3iIqlQRH37E51qByzg+Z19Wl6mGWzkX1Jw==
-  dependencies:
-    "@babel/runtime" "^7.0.0"
-    "@emotion/core" "^10.0.9"
-
-"@atlaskit/portal@^4.1.0":
-  version "4.2.6"
-  resolved "https://registry.yarnpkg.com/@atlaskit/portal/-/portal-4.2.6.tgz#f736d61ba45806fc885006cc458ed764d46095ee"
-  integrity sha512-fzionL4ALMK2KjBJGhDL1/YoAQXNuFb3nPQko3ZYTtIucb7IrWW08mMgVwwh96cfID+O1oTcsA9USfblNtvfyA==
-  dependencies:
-    "@atlaskit/theme" "^12.1.0"
-    "@babel/runtime" "^7.0.0"
 
 "@atlaskit/radio@^5.3.10":
   version "5.3.10"
@@ -3996,11 +3935,6 @@ detect-newline@^3.0.0:
   resolved "https://registry.yarnpkg.com/detect-newline/-/detect-newline-3.1.0.tgz#576f5dfc63ae1a192ff192d8ad3af6308991b651"
   integrity sha512-TLz+x/vEXm/Y7P7wn1EJFNLxYpUD4TgMosxY6fAVJUnJMbupHBOncxyWUG9OpTaH9EBD7uFI5LfEgmMOc54DsA==
 
-detect-node-es@^1.1.0:
-  version "1.1.0"
-  resolved "https://registry.yarnpkg.com/detect-node-es/-/detect-node-es-1.1.0.tgz#163acdf643330caa0b4cd7c21e7ee7755d6fa493"
-  integrity sha512-ypdmJU/TbBby2Dxibuv7ZLW3Bs1QEmM7nHjEANfohJLvE0XVujisn1qPJcZxg+qDucsr+bP6fLD1rPS3AhJ7EQ==
-
 detect-node@^2.0.4:
   version "2.1.0"
   resolved "https://registry.yarnpkg.com/detect-node/-/detect-node-2.1.0.tgz#c9c70775a49c3d03bc2c06d9a73be550f978f8b1"
@@ -4605,11 +4539,6 @@ execa@^5.0.0:
     signal-exit "^3.0.3"
     strip-final-newline "^2.0.0"
 
-exenv@^1.2.2:
-  version "1.2.2"
-  resolved "https://registry.yarnpkg.com/exenv/-/exenv-1.2.2.tgz#2ae78e85d9894158670b03d47bec1f03bd91bb9d"
-  integrity sha1-KueOhdmJQVhnCwPUe+wfA72Ru50=
-
 exit@^0.1.2:
   version "0.1.2"
   resolved "https://registry.yarnpkg.com/exit/-/exit-0.1.2.tgz#0632638f8d877cc82107d30a0fff1a17cba1cd0c"
@@ -4828,13 +4757,6 @@ flatted@^3.1.0:
   version "3.2.5"
   resolved "https://registry.yarnpkg.com/flatted/-/flatted-3.2.5.tgz#76c8584f4fc843db64702a6bd04ab7a8bd666da3"
   integrity sha512-WIWGi2L3DyTUvUrwRKgGi9TwxQMUEqPOPQBVi71R96jZXJdFskXEmf54BoZaS1kknGODoIGASGEzBUYdyMCBJg==
-
-focus-lock@^0.10.2:
-  version "0.10.2"
-  resolved "https://registry.yarnpkg.com/focus-lock/-/focus-lock-0.10.2.tgz#561c62bae8387ecba1dd8e58a6df5ec29835c644"
-  integrity sha512-DSaI/UHZ/02sg1P616aIWgToQcrKKBmcCvomDZ1PZvcJFj350PnWhSJxJ76T3e5/GbtQEARIACtbrdlrF9C5kA==
-  dependencies:
-    tslib "^2.0.3"
 
 follow-redirects@^1.0.0, follow-redirects@^1.14.8:
   version "1.14.9"
@@ -7637,11 +7559,6 @@ quick-lru@^5.1.1:
   resolved "https://registry.yarnpkg.com/quick-lru/-/quick-lru-5.1.1.tgz#366493e6b3e42a3a6885e2e99d18f80fb7a8c932"
   integrity sha512-WuyALRjWPDGtt/wzJiadO5AXY+8hZ80hVpe6MyivgraREW751X3SbhRvG3eLKOYN+8VEvqLcf3wdnt44Z4S4SA==
 
-raf-schd@^4.0.3:
-  version "4.0.3"
-  resolved "https://registry.yarnpkg.com/raf-schd/-/raf-schd-4.0.3.tgz#5d6c34ef46f8b2a0e880a8fcdb743efc5bfdbc1a"
-  integrity sha512-tQkJl2GRWh83ui2DiPTJz9wEiMN20syf+5oKfB03yYP7ioZcJwsIK8FjrtLwH1m7C7e+Tt2yYBlrOpdT+dyeIQ==
-
 raf@^3.4.1:
   version "3.4.1"
   resolved "https://registry.yarnpkg.com/raf/-/raf-3.4.1.tgz#0742e99a4a6552f445d73e3ee0328af0ff1ede39"
@@ -7682,13 +7599,6 @@ react-app-polyfill@^3.0.0:
     raf "^3.4.1"
     regenerator-runtime "^0.13.9"
     whatwg-fetch "^3.6.2"
-
-react-clientside-effect@^1.2.5:
-  version "1.2.5"
-  resolved "https://registry.yarnpkg.com/react-clientside-effect/-/react-clientside-effect-1.2.5.tgz#e2c4dc3c9ee109f642fac4f5b6e9bf5bcd2219a3"
-  integrity sha512-2bL8qFW1TGBHozGGbVeyvnggRpMjibeZM2536AKNENLECutp2yfs44IL8Hmpn8qjFQ2K7A9PnYf3vc7aQq/cPA==
-  dependencies:
-    "@babel/runtime" "^7.12.13"
 
 react-dev-utils@^12.0.1:
   version "12.0.1"
@@ -7738,18 +7648,6 @@ react-fast-compare@^3.0.1:
   version "3.2.0"
   resolved "https://registry.yarnpkg.com/react-fast-compare/-/react-fast-compare-3.2.0.tgz#641a9da81b6a6320f270e89724fb45a0b39e43bb"
   integrity sha512-rtGImPZ0YyLrscKI9xTpV8psd6I8VAtjKCzQDlzyDvqJA8XOW78TXYQwNRNd8g8JZnDu8q9Fu/1v4HPAVwVdHA==
-
-react-focus-lock@^2.5.2:
-  version "2.8.1"
-  resolved "https://registry.yarnpkg.com/react-focus-lock/-/react-focus-lock-2.8.1.tgz#a28f06a4ef5eab7d4ef0d859512772ec1331d529"
-  integrity sha512-4kb9I7JIiBm0EJ+CsIBQ+T1t5qtmwPRbFGYFQ0t2q2qIpbFbYTHDjnjJVFB7oMBtXityEOQehblJPjqSIf3Amg==
-  dependencies:
-    "@babel/runtime" "^7.0.0"
-    focus-lock "^0.10.2"
-    prop-types "^15.6.2"
-    react-clientside-effect "^1.2.5"
-    use-callback-ref "^1.2.5"
-    use-sidecar "^1.0.5"
 
 react-i18next@^11.16.7:
   version "11.16.7"
@@ -7890,13 +7788,6 @@ react-scripts@5.0.1:
     workbox-webpack-plugin "^6.4.1"
   optionalDependencies:
     fsevents "^2.3.2"
-
-react-scrolllock@^5.0.1:
-  version "5.0.1"
-  resolved "https://registry.yarnpkg.com/react-scrolllock/-/react-scrolllock-5.0.1.tgz#da1cfb7b6d55c86ae41dbad5274b778c307752b7"
-  integrity sha512-poeEsjnZAlpA6fJlaNo4rZtcip2j6l5mUGU/SJe1FFlicEudS943++u7ZSdA7lk10hoyYK3grOD02/qqt5Lxhw==
-  dependencies:
-    exenv "^1.2.2"
 
 react-star-rating-component@^1.4.1:
   version "1.4.1"
@@ -9078,25 +8969,10 @@ uri-js@^4.2.2:
   dependencies:
     punycode "^2.1.0"
 
-use-callback-ref@^1.2.5:
-  version "1.3.0"
-  resolved "https://registry.yarnpkg.com/use-callback-ref/-/use-callback-ref-1.3.0.tgz#772199899b9c9a50526fedc4993fc7fa1f7e32d5"
-  integrity sha512-3FT9PRuRdbB9HfXhEq35u4oZkvpJ5kuYbpqhCfmiZyReuRgpnhDlbr2ZEnnuS0RrJAPn6l23xjFg9kpDM+Ms7w==
-  dependencies:
-    tslib "^2.0.0"
-
 use-memo-one@^1.1.1:
   version "1.1.2"
   resolved "https://registry.yarnpkg.com/use-memo-one/-/use-memo-one-1.1.2.tgz#0c8203a329f76e040047a35a1197defe342fab20"
   integrity sha512-u2qFKtxLsia/r8qG0ZKkbytbztzRb317XCkT7yP8wxL0tZ/CzK2G+WWie5vWvpyeP7+YoPIwbJoIHJ4Ba4k0oQ==
-
-use-sidecar@^1.0.5:
-  version "1.1.2"
-  resolved "https://registry.yarnpkg.com/use-sidecar/-/use-sidecar-1.1.2.tgz#2f43126ba2d7d7e117aa5855e5d8f0276dfe73c2"
-  integrity sha512-epTbsLuzZ7lPClpz2TyryBfztm7m+28DlEv2ZCQ3MDr5ssiwyOwGH/e5F9CkfWjJ1t4clvI58yF822/GUkjjhw==
-  dependencies:
-    detect-node-es "^1.1.0"
-    tslib "^2.0.0"
 
 util-deprecate@^1.0.1, util-deprecate@^1.0.2, util-deprecate@~1.0.1:
   version "1.0.2"

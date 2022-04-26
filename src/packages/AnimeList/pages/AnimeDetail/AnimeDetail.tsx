@@ -122,16 +122,7 @@ const AnimeDetail: FC<Props> = (props) => {
 
   return (
     <>
-      <BannerCard
-        bannerImage={animeDetail.data.Media.bannerImage}
-        title={renderTitle()}
-        addToCollection={{
-          label: "Add to collection",
-          onCLick: () => {
-            setSelectedModal(ANIME_DETAIL_MODALS.ADD);
-          },
-        }}
-      />
+      <BannerCard bannerImage={animeDetail.data.Media.bannerImage} title={renderTitle()} />
       {animeDetail.data.Media.trailer && (
         <Trailer site={animeDetail.data.Media.trailer.site || ""} videoCode={animeDetail.data.Media.trailer.id || ""} />
       )}
@@ -141,6 +132,12 @@ const AnimeDetail: FC<Props> = (props) => {
           description={animeDetail.data.Media.description}
           averageScore={animeDetail.data.Media.averageScore}
           episodes={animeDetail.data.Media.episodes}
+          addToCollection={{
+            label: "Add to collection",
+            onCLick: () => {
+              setSelectedModal(ANIME_DETAIL_MODALS.ADD);
+            },
+          }}
         />
         <Cast allCasts={animeDetail.data.Media.characters.nodes} />
       </AnimeDescAndCast>
