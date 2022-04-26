@@ -12,7 +12,8 @@ import { RequestType } from "../../../../models/Response";
 import Cast from "./Cast";
 import Description from "./Description";
 import Trailer from "./Trailer";
-import { getTitle } from "../../../../utils/utils";
+import { getCollectionListFromLocalStorage, getTitle } from "../../../../utils/utils";
+import { AddCollectionModal } from "../../../Collection/pages/CollectionList/Modal";
 
 interface Props extends RouteComponentProps<{ animeId: string }> {}
 
@@ -38,6 +39,10 @@ const AnimeDescAndCast = styled.div`
   }
 `;
 
+enum ANIME_DETAIL_MODALS {
+  "ADD" = "ADD",
+}
+
 const AnimeDetail: FC<Props> = (props) => {
   const { signal } = useContext(AbortControllerContext);
   const {
@@ -51,6 +56,7 @@ const AnimeDetail: FC<Props> = (props) => {
     data: null,
     error: null,
   });
+  const [selectedModal, setSelectedModal] = useState<ANIME_DETAIL_MODALS | null>(null);
 
   useEffect(() => {
     (async () => {
@@ -74,8 +80,6 @@ const AnimeDetail: FC<Props> = (props) => {
         setAnimeDetail((prevState) => ({ ...prevState, error, isLoading: false }));
       });
   };
-
-  console.log(animeDetail);
 
   if (animeDetail.isLoading) {
     return (
@@ -118,7 +122,16 @@ const AnimeDetail: FC<Props> = (props) => {
 
   return (
     <>
-      <BannerCard bannerImage={animeDetail.data.Media.bannerImage} title={renderTitle()} />
+      <BannerCard
+        bannerImage={animeDetail.data.Media.bannerImage}
+        title={renderTitle()}
+        addToCollection={{
+          label: "Add to collection",
+          onCLick: () => {
+            setSelectedModal(ANIME_DETAIL_MODALS.ADD);
+          },
+        }}
+      />
       {animeDetail.data.Media.trailer && (
         <Trailer site={animeDetail.data.Media.trailer.site || ""} videoCode={animeDetail.data.Media.trailer.id || ""} />
       )}
@@ -132,6 +145,15 @@ const AnimeDetail: FC<Props> = (props) => {
         <Cast allCasts={animeDetail.data.Media.characters.nodes} />
       </AnimeDescAndCast>
       <br />
+      {selectedModal === ANIME_DETAIL_MODALS.ADD && animeDetail.data && (
+        <AddCollectionModal
+          collectionList={getCollectionListFromLocalStorage()}
+          onSubmitSuccess={() => setSelectedModal(null)}
+          onCancel={() => setSelectedModal(null)}
+          isFromAnimeDetail
+          selectedAnime={animeDetail.data}
+        />
+      )}
     </>
   );
 };

@@ -1,7 +1,7 @@
 import { CollectionList, CollectionMedia } from "../models/Collection";
 import { COLLECTION_LOCAL_STORAGE_KEY } from "../constants/constants";
 import { currentLanguage, LANGUAGE_CODES } from "../i18n/i18n";
-import { MediaResponse } from "../models/Anime";
+import { AnimeDetailResponse, MediaResponse } from "../models/Anime";
 
 export const getCollectionListFromLocalStorage = (): CollectionList => {
   const collectionList = localStorage.getItem(COLLECTION_LOCAL_STORAGE_KEY);
@@ -37,6 +37,15 @@ export const convertMediaResponseToCollectionMedia = (media: MediaResponse): Col
     id: media.id,
     coverImage: media.coverImage,
     seasonYear: media.seasonYear,
+  };
+};
+
+export const convertAnimeDetailResponseToCollectionMedia = (anime: AnimeDetailResponse): CollectionMedia => {
+  return {
+    title: anime.Media.title,
+    id: anime.Media.id,
+    coverImage: anime.Media.coverImage,
+    seasonYear: anime.Media.seasonYear,
   };
 };
 

@@ -1,15 +1,24 @@
 import React, { ChangeEvent, FC } from "react";
-import { FieldText } from "../../../../../../components/Components";
+import { ButtonLink, FieldText } from "../../../../../../components/Components";
 import { t } from "../../../../../../i18n/i18n";
+import { css } from "@emotion/css";
 
 interface Props {
   collectionName: string;
   onCollectionNameChange: (event: ChangeEvent<HTMLInputElement>) => void;
   errorMessage?: string;
+  showSeeCollectionListButton?: boolean;
+  onSeeCollectionListButtonClick?: () => void;
 }
 
 const CollectionForm: FC<Props> = (props) => {
-  const { collectionName, onCollectionNameChange, errorMessage } = props;
+  const {
+    collectionName,
+    onCollectionNameChange,
+    errorMessage,
+    showSeeCollectionListButton,
+    onSeeCollectionListButtonClick,
+  } = props;
 
   return (
     <>
@@ -20,6 +29,18 @@ const CollectionForm: FC<Props> = (props) => {
         value={collectionName}
         helperMessage={errorMessage}
       />
+      {showSeeCollectionListButton && onSeeCollectionListButtonClick && (
+        <div
+          className={css`
+            margin-top: 5px;
+          `}
+        >
+          <ButtonLink
+            onClick={onSeeCollectionListButtonClick}
+            label={t("collectionList.modal.addEditCollection.seeCollectionList.label")}
+          />
+        </div>
+      )}
     </>
   );
 };

@@ -69,6 +69,12 @@ export const fetchAnimeDetail = (animeId: number, abortSignal?: AbortSignal) => 
                 episodes
                 genres
                 averageScore
+                coverImage {
+                  extraLarge
+                  large
+                  medium
+                }
+                seasonYear
               }
         }
     `;

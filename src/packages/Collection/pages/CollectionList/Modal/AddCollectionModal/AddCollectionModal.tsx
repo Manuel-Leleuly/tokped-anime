@@ -1,10 +1,16 @@
 import React, { ChangeEvent, FC, useState } from "react";
-import { CollectionList, CollectionMedia } from "../../../../../../models/Collection";
+import { CollectionData, CollectionList, CollectionMedia } from "../../../../../../models/Collection";
 import { Modal } from "../../../../../../components/Components";
 import CollectionForm from "./CollectionForm";
 import AnimeListToPick from "./AnimeListToPick";
-import { generateUniqueCollectionId, updateCollectionListToLocalStorage } from "../../../../../../utils/utils";
+import {
+  convertAnimeDetailResponseToCollectionMedia,
+  generateUniqueCollectionId,
+  updateCollectionListToLocalStorage,
+} from "../../../../../../utils/utils";
 import { t } from "../../../../../../i18n/i18n";
+import CollectionListToPick from "./CollectionListToPick";
+import { AnimeDetailResponse } from "../../../../../../models/Anime";
 
 interface Props {
   collectionList: CollectionList;
@@ -13,20 +19,39 @@ interface Props {
   isEdit?: boolean;
   selectedCollectionName?: string;
   collectionId?: number;
+  isFromAnimeDetail?: boolean;
+  selectedAnime?: AnimeDetailResponse;
 }
 
 enum COLLECTION_MODAL_STEPS {
   "FORM" = "FORM",
   "ANIME_LIST" = "ANIME_LIST",
+  "COLLECTION_LIST" = "COLLECTION_LIST",
 }
 
 const AddCollectionModal: FC<Props> = (props) => {
-  const { collectionList, onSubmitSuccess, onCancel, isEdit, collectionId, selectedCollectionName } = props;
+  const {
+    collectionList,
+    onSubmitSuccess,
+    onCancel,
+    isEdit,
+    collectionId,
+    selectedCollectionName,
+    isFromAnimeDetail,
+    selectedAnime,
+  } = props;
 
-  const [selectedStep, setSelectedStep] = useState<COLLECTION_MODAL_STEPS>(COLLECTION_MODAL_STEPS.FORM);
+  const [selectedStep, setSelectedStep] = useState<COLLECTION_MODAL_STEPS>(() => {
+    if (isFromAnimeDetail && selectedAnime) {
+      if (!!collectionList.length) return COLLECTION_MODAL_STEPS.COLLECTION_LIST;
+      return COLLECTION_MODAL_STEPS.FORM;
+    }
+    return COLLECTION_MODAL_STEPS.FORM;
+  });
   const [collectionName, setCollectionName] = useState<string>(selectedCollectionName || "");
   const [selectedMedia, setSelectedMedia] = useState<CollectionMedia[]>([]);
   const [isModalLoading, setIsModalLoading] = useState<boolean>(false);
+  const [selectedCollection, setSelectedCollection] = useState<CollectionData | null>(null);
 
   const handleCollectionNameChange = (event: ChangeEvent<HTMLInputElement>) => {
     setCollectionName(event.target.value);
@@ -40,11 +65,24 @@ const AddCollectionModal: FC<Props> = (props) => {
       if (selectedCollectionIndex >= 0) {
         newCollectionList[selectedCollectionIndex].collectionName = collectionName;
       }
+    } else if (isFromAnimeDetail && selectedAnime && !!collectionList.length && selectedCollection) {
+      const selectedCollectionIndex = newCollectionList.findIndex(
+        (collection) => collection.id === selectedCollection.id
+      );
+      if (selectedCollectionIndex >= 0) {
+        newCollectionList[selectedCollectionIndex].animeList.push(
+          convertAnimeDetailResponseToCollectionMedia(selectedAnime)
+        );
+      }
     } else {
+      const newSelectedMedia = [...selectedMedia];
+      if (selectedAnime) {
+        newSelectedMedia.push(convertAnimeDetailResponseToCollectionMedia(selectedAnime));
+      }
       newCollectionList.push({
         collectionName,
         id: generateUniqueCollectionId(collectionList),
-        animeList: selectedMedia,
+        animeList: newSelectedMedia,
       });
     }
     updateCollectionListToLocalStorage(newCollectionList);
@@ -62,8 +100,8 @@ const AddCollectionModal: FC<Props> = (props) => {
           return t("collectionList.modal.addEditCollection.form.error.alreadyExist");
         }
 
-        const regex = new RegExp(/a-zA-Z0-9!@#\$%\^\&*\)\(+=._-/g);
-        if (collectionName.match(regex)) {
+        const regex = new RegExp(/[`~!@#$%^&*()_|+\-=?;:'",.<>\{\}\[\]\\\/]/gi);
+        if (!!collectionName.match(regex)) {
           return t("collectionList.modal.addEditCollection.form.error.specialChar");
         }
       }
@@ -75,11 +113,34 @@ const AddCollectionModal: FC<Props> = (props) => {
       collectionName={collectionName}
       onCollectionNameChange={handleCollectionNameChange}
       errorMessage={renderErrMessage()}
+      onSeeCollectionListButtonClick={() => setSelectedStep(COLLECTION_MODAL_STEPS.COLLECTION_LIST)}
+      showSeeCollectionListButton={!!collectionList.length}
     />
   );
 
   const renderAnimeList = () => {
     return <AnimeListToPick selectedMedia={selectedMedia} setSelectedMedia={setSelectedMedia} />;
+  };
+
+  const renderCollectionListToPick = () => {
+    const isRadioDisabled = (): boolean => {
+      if (selectedAnime) {
+        return !!collectionList.find(
+          (collection) => !!collection.animeList.find((anime) => anime.id === selectedAnime.Media.id)
+        );
+      }
+      return false;
+    };
+
+    return (
+      <CollectionListToPick
+        collectionList={collectionList}
+        selectedCollection={selectedCollection}
+        setSelectedCollection={setSelectedCollection}
+        isRadioDisabled={isRadioDisabled()}
+        onCreateANewCollectionClick={() => setSelectedStep(COLLECTION_MODAL_STEPS.FORM)}
+      />
+    );
   };
 
   const renderContent = () => {
@@ -88,12 +149,16 @@ const AddCollectionModal: FC<Props> = (props) => {
         return renderForm();
       case COLLECTION_MODAL_STEPS.ANIME_LIST:
         return renderAnimeList();
+      case COLLECTION_MODAL_STEPS.COLLECTION_LIST:
+        return renderCollectionListToPick();
       default:
         break;
     }
   };
 
   const onModalSubmit = () => {
+    if (isFromAnimeDetail && selectedAnime) return onSubmit();
+
     switch (selectedStep) {
       case COLLECTION_MODAL_STEPS.FORM:
         if (isEdit) onSubmit();
@@ -108,6 +173,10 @@ const AddCollectionModal: FC<Props> = (props) => {
   };
 
   const isModalDisabled = (): boolean => {
+    if (isFromAnimeDetail && selectedAnime && selectedStep !== COLLECTION_MODAL_STEPS.FORM) {
+      return !selectedCollection;
+    }
+
     switch (selectedStep) {
       case COLLECTION_MODAL_STEPS.FORM:
         return !!renderErrMessage();

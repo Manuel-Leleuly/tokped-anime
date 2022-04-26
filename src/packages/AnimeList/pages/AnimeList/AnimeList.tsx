@@ -1,7 +1,7 @@
 import { css } from "@emotion/css";
 import styled from "@emotion/styled";
 import React, { FC, useContext, useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import { fetchAnimeList } from "../../../../api/Anime";
 import { AnimeCard, Center, Pagination } from "../../../../components/Components";
 import { WINDOW_WIDTH } from "../../../../constants/constants";
@@ -10,6 +10,7 @@ import { t } from "../../../../i18n/i18n";
 import { MediaPageResponse } from "../../../../models/Anime";
 import { RequestType } from "../../../../models/Response";
 import { getTitle } from "../../../../utils/utils";
+import { parse } from "query-string";
 
 export const ANIME_PER_PAGE = 50;
 
@@ -44,7 +45,8 @@ const AnimeListWrapper = styled.div`
   }
 `;
 
-const AnimeList: FC = (props) => {
+const AnimeList: FC = () => {
+  const history = useHistory();
   const { signal } = useContext(AbortControllerContext);
   const [animeList, setAnimeList] = useState<RequestType<MediaPageResponse | null>>({
     isLoading: false,
@@ -52,13 +54,13 @@ const AnimeList: FC = (props) => {
     error: null,
   });
 
-  const [selectedPage, setSelectedPage] = useState<number>(1);
-
   useEffect(() => {
     (async () => {
-      await getAnimeList(selectedPage);
+      const { page } = parse(history.location.search);
+      const pageNumber = page ? +page : 1;
+      await getAnimeList(pageNumber);
     })();
-  }, [selectedPage]);
+  }, [window.location.href]);
 
   const getAnimeList = async (pageNumber: number) => {
     if (animeList.isLoading) return;
@@ -78,7 +80,9 @@ const AnimeList: FC = (props) => {
   };
 
   const onPageChange = (pageNumber: number) => {
-    setSelectedPage(pageNumber);
+    const searchParams = new URLSearchParams();
+    searchParams.set("page", pageNumber.toString());
+    history.push(`?${searchParams.toString()}`);
   };
 
   if (!animeList.data && animeList.isLoading) {
