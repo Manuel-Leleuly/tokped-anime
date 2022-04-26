@@ -9,5 +9,6 @@ import Modal from "./Modal/Modal";
 import FieldText from "./FieldText/FieldText";
 
 import ButtonLink from "./Button/ButtonLink/ButtonLink";
+import ButtonFull from "./Button/ButtonFull/ButtonFull";
 
-export { AnimeCard, BannerCard, Pagination, Center, Fallback, Page, Modal, FieldText, ButtonLink };
+export { AnimeCard, BannerCard, Pagination, Center, Fallback, Page, Modal, FieldText, ButtonLink, ButtonFull };

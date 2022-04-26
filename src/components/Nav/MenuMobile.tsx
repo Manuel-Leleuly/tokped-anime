@@ -2,9 +2,10 @@ import Button from "@atlaskit/button";
 import { css } from "@emotion/css";
 import styled from "@emotion/styled";
 import React, { FC } from "react";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import { MOBILE_WIDTH } from "../../constants/constants";
 import { t } from "../../i18n/i18n";
+import { ButtonLink } from "../Components";
 
 interface Props {
   handleLanguageChange: () => void;
@@ -52,54 +53,28 @@ const MenuAppear = css`
 `;
 
 const MenuMobile: FC<Props> = (props) => {
+  const history = useHistory();
   const { handleLanguageChange, isMenuClick, onMenuButtonClick } = props;
 
   return (
     <>
       {isMenuClick && <MenuOverlay onClick={onMenuButtonClick} />}
       <MenuMobileWrapper className={isMenuClick ? MenuAppear : undefined}>
-        <Link
-          to="/"
-          className={css({
-            textDecoration: "none",
-            color: "black",
-            "&:hover": {
-              color: "gray",
-            },
-            paddingRight: "20px",
-          })}
-          onClick={onMenuButtonClick}
-        >
-          <p>{t("nav.menu.animeList.label")}</p>
-        </Link>
-        <Link
-          to="/collection"
-          className={css({
-            textDecoration: "none",
-            color: "black",
-            "&:hover": {
-              color: "gray",
-            },
-            paddingRight: "20px",
-          })}
-          onClick={onMenuButtonClick}
-        >
-          <p>{t("nav.menu.collection.label")}</p>
-        </Link>
-        <Button
-          appearance="subtle-link"
-          onClick={handleLanguageChange}
-          className={css({
-            color: "black !important",
-            paddingLeft: "0 !important",
-            "&:hover": {
-              textDecoration: "none !important",
-              color: "gray !important",
-            },
-          })}
-        >
-          {t("nav.menu.language.button.label")}
-        </Button>
+        <ButtonLink
+          onClick={() => {
+            onMenuButtonClick();
+            history.push(`/`);
+          }}
+          label={t("nav.menu.animeList.label")}
+        />
+        <ButtonLink
+          onClick={() => {
+            onMenuButtonClick();
+            history.push(`/collection`);
+          }}
+          label={t("nav.menu.collection.label")}
+        />
+        <ButtonLink onClick={handleLanguageChange} label={t("nav.menu.language.button.label")} />
       </MenuMobileWrapper>
     </>
   );

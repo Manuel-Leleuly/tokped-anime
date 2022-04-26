@@ -1,11 +1,10 @@
 import React, { FC } from "react";
 import styled from "@emotion/styled";
-import { CollectionData } from "../../../../../../models/Collection";
+import { CollectionData } from "../../../../models/Collection";
 import { Link } from "react-router-dom";
 import { css } from "@emotion/css";
-import Button from "@atlaskit/button";
-import { t } from "../../../../../../i18n/i18n";
-import { WINDOW_WIDTH } from "../../../../../../constants/constants";
+import { t } from "../../../../i18n/i18n";
+import { ButtonFull } from "../../../../components/Components";
 
 const CollectionDiv = styled.div`
   width: 300px;
@@ -13,10 +12,7 @@ const CollectionDiv = styled.div`
   position: relative;
   overflow: hidden;
   margin: auto;
-
-  @media (max-width: ${WINDOW_WIDTH.md}) {
-    margin-top: 10px;
-  }
+  margin-top: 10px;
 `;
 
 const CollectionImage = styled.img`
@@ -90,18 +86,26 @@ const CollectionCard: FC<Props> = (props) => {
           bottom: 10px;
         `}
       >
-        <Button
-          appearance="primary"
+        <ButtonFull
+          label={t("common.edit")}
           onClick={() => onEditButtonClick(collectionData)}
-          className={css`
+          buttonClassName={css`
             margin-right: 5px;
+            :hover {
+              background: #282c34 !important;
+            }
           `}
-        >
-          {t("common.edit")}
-        </Button>
-        <Button appearance="danger" onClick={() => onRemoveButtonClick(collectionData)}>
-          {t("common.remove")}
-        </Button>
+        />
+        <ButtonFull
+          label={t("common.remove")}
+          onClick={() => onRemoveButtonClick(collectionData)}
+          buttonClassName={css`
+            margin-right: 5px;
+            :hover {
+              background: #282c34 !important;
+            }
+          `}
+        />
       </div>
     </CollectionDiv>
   );

@@ -5,10 +5,10 @@ import { getCollectionListFromLocalStorage } from "../../../../utils/utils";
 import styled from "@emotion/styled";
 import { WINDOW_WIDTH } from "../../../../constants/constants";
 import { css } from "@emotion/css";
-import Button from "@atlaskit/button";
 import { t } from "../../../../i18n/i18n";
 import { AddCollectionModal, RemoveCollectionModal } from "./Modal";
-import CollectionCard from "./Modal/AddCollectionModal/CollectionCard";
+import CollectionCard from "./CollectionCard";
+import { ButtonLink } from "../../../../components/Components";
 
 const CollectionWrapper = styled.div`
   display: grid;
@@ -76,9 +76,10 @@ const Collection: FC = () => {
       <>
         <CollectionNotFound>
           <p className={css({ marginRight: "5px" })}>{t("collectionList.notFound.message")}</p>
-          <Button appearance="link" onClick={() => setSelectedModal(COLLECTION_MODALS.ADD)}>
-            {t("collectionList.notFound.button.label")}
-          </Button>
+          <ButtonLink
+            onClick={() => setSelectedModal(COLLECTION_MODALS.ADD)}
+            label={t("collectionList.notFound.button.label")}
+          />
         </CollectionNotFound>
         {selectedModal === COLLECTION_MODALS.ADD && (
           <AddCollectionModal
@@ -103,9 +104,10 @@ const Collection: FC = () => {
           margin-bottom: 20px;
         `}
       >
-        <Button appearance="link" onClick={() => setSelectedModal(COLLECTION_MODALS.ADD)}>
-          {t("collectionList.addNewCollection.button.label")}
-        </Button>
+        <ButtonLink
+          onClick={() => setSelectedModal(COLLECTION_MODALS.ADD)}
+          label={t("collectionList.addNewCollection.button.label")}
+        />
       </div>
       <CollectionWrapper>
         {collectionList.data.map((collection) => (
@@ -123,6 +125,7 @@ const Collection: FC = () => {
           />
         ))}
       </CollectionWrapper>
+      <br />
       {selectedModal === COLLECTION_MODALS.ADD && (
         <AddCollectionModal
           collectionList={collectionList.data}

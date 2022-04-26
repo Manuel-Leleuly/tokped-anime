@@ -60,18 +60,7 @@ const MenuDesktop: FC<Props> = (props) => {
         <ButtonLink onClick={handleLanguageChange} label={t("nav.menu.language.button.label")} />
       </ButtonWrapper>
       <MenuWrapper>
-        <Button
-          appearance="link"
-          onClick={onMenuButtonClick}
-          className={css({
-            color: "black !important",
-            "&:hover": {
-              textDecoration: "none !important",
-            },
-          })}
-        >
-          {t("nav.menu.button.label")}
-        </Button>
+        <ButtonLink onClick={onMenuButtonClick} label={t("nav.menu.button.label")} />
       </MenuWrapper>
     </>
   );

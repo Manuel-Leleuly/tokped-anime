@@ -1,9 +1,9 @@
-import Button from "@atlaskit/button";
 import { css } from "@emotion/css";
 import styled from "@emotion/styled";
 import React, { FC } from "react";
 import { t } from "../../../i18n/i18n";
 import { PageInfo } from "../../../models/Anime";
+import { ButtonLink } from "../index";
 
 interface Props {
   pageInfo: PageInfo;
@@ -30,23 +30,19 @@ const Pagination: FC<Props> = (props) => {
           align-items: center;
         `}
       >
-        <Button
-          appearance="link"
+        <ButtonLink
           onClick={() => onPageChange(pageInfo.currentPage - 1)}
-          isDisabled={pageInfo.currentPage === 1}
-          className={css`
+          label={t("pagination.prev.label")}
+          buttonClassName={css`
             margin-right: 10px;
           `}
-        >
-          {t("pagination.prev.label")}
-        </Button>
-        <Button
-          appearance="link"
+          isDisabled={pageInfo.currentPage === 1}
+        />
+        <ButtonLink
           onClick={() => onPageChange(pageInfo.currentPage + 1)}
           isDisabled={!pageInfo.hasNextPage}
-        >
-          {t("pagination.next.label")}
-        </Button>
+          label={t("pagination.next.label")}
+        />
       </div>
     </PaginationWrapper>
   );

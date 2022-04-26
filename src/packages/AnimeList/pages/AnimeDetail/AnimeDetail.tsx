@@ -124,6 +124,7 @@ const AnimeDetail: FC<Props> = (props) => {
       )}
       <AnimeDescAndCast>
         <Description
+          animeId={animeDetail.data.Media.id}
           description={animeDetail.data.Media.description}
           averageScore={animeDetail.data.Media.averageScore}
           episodes={animeDetail.data.Media.episodes}

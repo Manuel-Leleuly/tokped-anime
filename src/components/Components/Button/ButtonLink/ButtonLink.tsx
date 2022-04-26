@@ -7,31 +7,39 @@ interface Props {
   label: string;
   lightText?: boolean;
   isDisabled?: boolean;
+  buttonClassName?: string;
+  labelClassName?: string;
 }
 
 const ButtonLink: FC<Props> = (props) => {
-  const { onClick, label, lightText, isDisabled } = props;
+  const { onClick, label, lightText, isDisabled, buttonClassName, labelClassName } = props;
 
   return (
     <Button
       appearance="link"
       onClick={onClick}
-      className={css`
+      className={`${css`
         text-decoration: none !important;
         :hover {
           text-decoration: none !important;
         }
-      `}
+      `} ${buttonClassName}`}
       isDisabled={isDisabled}
     >
       <p
-        className={css`
-          margin: 0;
-          color: black !important;
-          :hover {
-            color: gray !important;
-          }
-        `}
+        className={`${
+          !isDisabled
+            ? css`
+                margin: 0;
+                color: black;
+                :hover {
+                  color: gray;
+                }
+              `
+            : css`
+                margin: 0;
+              `
+        } ${labelClassName}`}
       >
         <span
           className={
