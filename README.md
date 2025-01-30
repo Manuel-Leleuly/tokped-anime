@@ -1,5 +1,9 @@
 # Tokped Anime
 
+## Description
+
+This is a project created as a hiring requirement back when I interviewed for Tokopedia. If this project should not be viewed in public, please let me know and I'll make it private as soon as possible. Thank you and have fun!
+
 ## Environment Variables
 
 Required environment variables:
